@@ -82,7 +82,7 @@ function Treatments() {
         </section>
       ))}
 
-      <section id="hudbehov" className="panel-stripes scroll-mt-28 py-16 md:py-24">
+      <section id="hudbehov" className="bg-sand scroll-mt-28 py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
           <Reveal className="max-w-2xl">
             <Kicker>Hitta rätt behandling</Kicker>

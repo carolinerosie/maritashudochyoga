@@ -64,12 +64,12 @@ export function TreatmentArticle({
               <p className="mt-5 text-xl leading-relaxed text-ink/75">{t.short}</p>
               <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
                 {duration ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-panel px-4 py-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2">
                     <Clock aria-hidden className="size-4" strokeWidth={1.75} />
                     {duration}
                   </span>
                 ) : null}
-                <span className="rounded-full bg-syren px-4 py-2 font-medium text-syren-ink">
+                <span className="rounded-full bg-rosa px-4 py-2 font-medium text-rosa-ink">
                   {fromPrice(t)}
                 </span>
               </div>
@@ -90,14 +90,14 @@ export function TreatmentArticle({
       {/* PASSAR DIG SOM + PRIS */}
       <section className="py-16 md:py-24">
         <div className="mx-auto grid max-w-[1240px] gap-8 px-6 md:grid-cols-12 md:px-10">
-          <Reveal className="rounded-3xl bg-white p-7 md:col-span-7 md:p-10">
+          <Reveal className="rounded-2xl bg-white p-7 md:col-span-7 md:p-10">
             <h2 className="text-3xl">Passar dig som…</h2>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {t.forWho.map((f) => (
                 <li key={f} className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-syren text-syren-ink"
+                    className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-rosa text-rosa-ink"
                   >
                     <Check className="size-3.5" strokeWidth={2.25} />
                   </span>
@@ -109,9 +109,9 @@ export function TreatmentArticle({
             <p className="mt-4 text-lg leading-relaxed text-ink/80">{t.what}</p>
           </Reveal>
           <Reveal delay={120} className="md:col-span-5">
-            <div id="pris" className="rounded-3xl bg-primary p-7 text-primary-foreground md:p-9">
+            <div id="pris" className="rounded-2xl bg-dimbla p-7 text-ink md:p-9">
               <h2 className="text-3xl">Pris & tid</h2>
-              <dl className="mt-5 divide-y divide-white/20">
+              <dl className="mt-5 divide-y divide-ink/10">
                 {t.prices.map((p) => (
                   <div
                     key={p.label + p.price}
@@ -120,7 +120,9 @@ export function TreatmentArticle({
                     <dt className="leading-snug">
                       {p.label}
                       {p.duration ? (
-                        <span className="mt-0.5 block text-sm text-white/70">{p.duration}</span>
+                        <span className="mt-0.5 block text-sm text-muted-foreground">
+                          {p.duration}
+                        </span>
                       ) : null}
                     </dt>
                     <dd
@@ -131,11 +133,11 @@ export function TreatmentArticle({
                   </div>
                 ))}
               </dl>
-              {t.priceNote ? <p className="mt-3 text-sm text-white/80">{t.priceNote}</p> : null}
-              <p className="mt-2 text-sm text-white/80">{contact.payment}</p>
+              {t.priceNote ? <p className="mt-3 text-sm text-ink/70">{t.priceNote}</p> : null}
+              <p className="mt-2 text-sm text-ink/70">{contact.payment}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <BookButton variant="light" />
-                <ConsultButton variant="light">Ring och fråga</ConsultButton>
+                <BookButton />
+                <ConsultButton>Ring och fråga</ConsultButton>
               </div>
             </div>
           </Reveal>
@@ -143,7 +145,7 @@ export function TreatmentArticle({
       </section>
 
       {/* SÅ GÅR DET TILL */}
-      <section className="panel-stripes py-16 md:py-24">
+      <section className="bg-sand py-16 md:py-24">
         <div className="mx-auto grid max-w-[1240px] gap-10 px-6 md:grid-cols-12 md:px-10">
           <Reveal className="md:col-span-4">
             <Kicker>Behandlingen</Kicker>
@@ -159,14 +161,14 @@ export function TreatmentArticle({
                 <p className="mt-4 leading-relaxed">{d}</p>
               </Reveal>
             ))}
-            <Reveal as="li" className="rounded-2xl bg-syren p-6 sm:col-span-2">
-              <p className="font-serif text-xl text-syren-ink">Med dig hem</p>
+            <Reveal as="li" className="rounded-2xl bg-rosa p-6 sm:col-span-2">
+              <p className="font-serif text-xl text-rosa-ink">Med dig hem</p>
               <ul className="mt-3 space-y-2">
                 {t.takeaway.map((x) => (
                   <li key={x} className="flex gap-3 leading-relaxed">
                     <Check
                       aria-hidden
-                      className="mt-1 size-4 shrink-0 text-syren-ink"
+                      className="mt-1 size-4 shrink-0 text-rosa-ink"
                       strokeWidth={2}
                     />
                     {x}
@@ -183,7 +185,7 @@ export function TreatmentArticle({
         <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 md:grid-cols-12 md:px-10">
           <Reveal className="md:col-span-5">
             <figure>
-              <div className="overflow-hidden rounded-3xl">
+              <div className="overflow-hidden rounded-2xl">
                 <img
                   src={ateljen}
                   alt="Behandlingsrummet i Maritas ateljé på Målarns Gård i Frillesås"
@@ -191,7 +193,7 @@ export function TreatmentArticle({
                 />
               </div>
               <figcaption className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="size-4 text-tegel" strokeWidth={1.75} aria-hidden />
+                <MapPin className="size-4 text-champagne" strokeWidth={1.75} aria-hidden />
                 {contact.venue}, {contact.street}, {contact.locality}
               </figcaption>
             </figure>
@@ -256,7 +258,7 @@ export function TreatmentArticle({
       {/* BOKA */}
       <section className="pb-16 md:pb-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
-          <div className="grid gap-8 rounded-[2rem] bg-syren p-8 md:grid-cols-12 md:p-12">
+          <div className="grid gap-8 rounded-2xl bg-rosa p-8 md:grid-cols-12 md:p-12">
             <div className="md:col-span-7">
               <h2 className="text-4xl leading-tight">Vill du boka – eller prata först?</h2>
               <p className="mt-4 text-lg text-ink/75">

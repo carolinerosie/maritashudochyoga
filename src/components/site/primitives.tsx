@@ -44,7 +44,7 @@ export function Reveal({
 }
 
 const pill =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-medium transition-colors duration-200";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] transition-colors duration-200";
 
 /** Primär knapp: Boka tid. Länken styrs av BOOKING_URL i site.ts. */
 export function BookButton({
@@ -64,7 +64,7 @@ export function BookButton({
       className={cn(
         pill,
         variant === "solid" && "bg-primary text-primary-foreground hover:bg-ink",
-        variant === "light" && "bg-white text-ink hover:bg-syren",
+        variant === "light" && "bg-white text-ink hover:bg-sand",
         variant === "outline" &&
           "border border-primary/40 text-primary hover:border-primary hover:bg-primary hover:text-primary-foreground",
         className,
@@ -116,13 +116,10 @@ export const Eyebrow = Kicker;
 export function CareNotice({ className }: { className?: string }) {
   return (
     <aside
-      className={cn(
-        "rounded-2xl bg-syren px-5 py-4 text-sm leading-relaxed text-ink/80",
-        className,
-      )}
+      className={cn("rounded-2xl bg-rosa px-5 py-4 text-sm leading-relaxed text-ink/80", className)}
     >
       <p>
-        <strong className="mb-1 block font-medium text-syren-ink">Bra att veta</strong>
+        <strong className="mb-1 block font-medium text-rosa-ink">Bra att veta</strong>
         Behandlingarna är hudvård och friskvård – inte medicinsk behandling. Har du en hudsjukdom
         eller nya, oklara besvär, kontakta vården först. Berätta gärna när du bokar om du är gravid,
         ammar eller tar medicin.

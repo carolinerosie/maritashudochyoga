@@ -18,7 +18,7 @@ export function TreatmentCard({
     <TreatmentLink
       slug={t.slug}
       className={cn(
-        "lift group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card",
+        "lift group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card",
         className,
       )}
     >
@@ -32,7 +32,7 @@ export function TreatmentCard({
       </span>
       <span className="flex flex-1 flex-col p-6">
         {showGroup ? (
-          <span className="text-sm font-medium text-tegel">{groups[t.group].label}</span>
+          <span className="text-sm font-medium text-champagne">{groups[t.group].label}</span>
         ) : null}
         <span className="mt-1.5 font-serif text-[1.55rem] leading-snug">{t.name}</span>
         <span className="mt-2 block flex-1 leading-relaxed text-ink/70">{t.short}</span>

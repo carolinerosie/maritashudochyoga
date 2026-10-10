@@ -54,7 +54,7 @@ function PriceList() {
 
         <div className="mt-12 space-y-10">
           {groupOrder.map((g) => (
-            <Reveal key={g} as="section" className="scroll-mt-28 rounded-3xl bg-white p-6 md:p-10">
+            <Reveal key={g} as="section" className="scroll-mt-28 rounded-2xl bg-white p-6 md:p-10">
               <h2 id={`pris-${groups[g].slug}`} className="scroll-mt-28 text-3xl md:text-4xl">
                 {groups[g].label}
               </h2>
@@ -76,7 +76,9 @@ function PriceList() {
                           <dt className="leading-snug">
                             {p.label}
                             {p.duration ? (
-                              <span className="block text-sm text-muted-foreground sm:ml-2 sm:inline">{p.duration}</span>
+                              <span className="block text-sm text-muted-foreground sm:ml-2 sm:inline">
+                                {p.duration}
+                              </span>
                             ) : null}
                           </dt>
                           <dd
@@ -97,7 +99,7 @@ function PriceList() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 rounded-3xl bg-syren p-8 md:grid-cols-2 md:p-10">
+        <div className="mt-12 grid gap-6 rounded-2xl bg-rosa p-8 md:grid-cols-2 md:p-10">
           <div>
             <h2 className="text-3xl">Boka din tid</h2>
             <p className="mt-3 text-ink/75">

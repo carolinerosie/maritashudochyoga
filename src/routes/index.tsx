@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import hero from "@/assets/ateljen-behandlingsrum.jpg";
+import hero from "@/assets/stamning-massage-rum.jpg";
 import skylt from "@/assets/malarns-gard-skylt.jpg";
 import marita from "@/assets/marita-dorren.jpg";
 import butik from "@/assets/malarns-gard-butik.jpg";
@@ -94,57 +94,54 @@ function Index() {
   const review = testimonials[0];
   return (
     <>
-      {/* 1. HERO */}
-      <section className="overflow-hidden pt-28 md:pt-40">
-        <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 pb-14 md:grid-cols-12 md:px-10 md:pb-20">
-          <div className="md:col-span-6">
+      {/* 1. HERO – hel bildyta */}
+      <section className="relative isolate flex min-h-[640px] items-end overflow-hidden bg-ink pt-32 text-white md:min-h-[760px] md:items-center">
+        <img
+          src={hero}
+          alt="Stämningsbild: lugn nackmassage i ett varmt, ombonat behandlingsrum"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-[60%_40%]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/80 via-ink/40 to-ink/10 md:bg-gradient-to-r md:from-ink/75 md:via-ink/35 md:to-transparent"
+        />
+        <div className="mx-auto w-full max-w-[1240px] px-6 pb-14 md:px-10 md:pb-0">
+          <div className="max-w-xl">
             <Reveal>
-              <Kicker>Auktoriserad hudterapeut · Frillesås · sedan 2001</Kicker>
+              <Kicker className="text-white/85">Auktoriserad hudterapeut · Frillesås</Kicker>
             </Reveal>
             <Reveal delay={80}>
-              <h1 className="mt-5 text-[2.8rem] leading-[1.05] md:text-[4.2rem]">
-                Hudvård med omsorg, <span className="text-primary">inne på gården.</span>
+              <h1 className="mt-5 text-[3.1rem] leading-[1.02] md:text-[5rem]">
+                Hudvård med omsorg, <em className="font-medium italic">inne på gården.</em>
               </h1>
             </Reveal>
             <Reveal delay={160}>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/75 md:text-xl">
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/90 md:text-xl">
                 Ansiktsbehandlingar, hudkurer och massage hos Marita på Målarns Gård i Frillesås –
-                med en hemvård som passar just din hud.
+                sedan 2001.
               </p>
             </Reveal>
-            <Reveal delay={240} className="mt-8 flex flex-wrap gap-3">
-              <BookButton />
+            <Reveal delay={240} className="mt-9 flex flex-wrap gap-3">
+              <BookButton variant="light" />
               <Link
                 to="/prislista"
-                className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-6 py-3 font-medium hover:border-ink"
+                className="inline-flex min-h-12 items-center rounded-full border border-white/60 px-7 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-white transition-colors hover:bg-white hover:text-ink"
               >
                 Se prislistan
               </Link>
             </Reveal>
-            <Reveal delay={320} className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/75">
+            <Reveal
+              delay={320}
+              className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-sm text-white/85"
+            >
               {trustProof.items.slice(0, 3).map((item) => (
                 <span key={item} className="inline-flex items-center gap-1.5">
-                  <BadgeCheck aria-hidden className="size-4 text-primary" strokeWidth={1.75} />
+                  <BadgeCheck aria-hidden className="size-4" strokeWidth={1.5} />
                   {item}
                 </span>
               ))}
             </Reveal>
           </div>
-          <Reveal delay={150} className="relative md:col-span-5 md:col-start-8">
-            <div className="arch aspect-[4/5]">
-              <img
-                src={hero}
-                alt="Behandlingsrummet i Maritas ateljé: behandlingsbänk med turkosa handdukar, lampa och hudvårdsprodukter"
-                className="h-full w-full object-cover object-[45%_50%]"
-              />
-            </div>
-            <div className="absolute -bottom-5 -left-3 grid size-28 place-items-center rounded-full bg-tegel text-center text-white shadow-lg md:-left-8 md:size-32">
-              <span>
-                <span className="block text-xs tracking-[0.12em]">SEDAN</span>
-                <span className="block font-serif text-3xl md:text-4xl">2001</span>
-              </span>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -162,7 +159,7 @@ function Index() {
                 <Link
                   to="/behandlingar"
                   hash={groups[g].slug}
-                  className="lift group flex h-full flex-col overflow-hidden rounded-3xl bg-white"
+                  className="lift group flex h-full flex-col overflow-hidden rounded-2xl bg-white"
                 >
                   <span className="block aspect-[4/3] overflow-hidden lg:aspect-[3/4]">
                     <img
@@ -207,7 +204,7 @@ function Index() {
       </section>
 
       {/* 4. HUDBEHOV */}
-      <section id="hudbehov" className="panel-stripes scroll-mt-28 py-16 md:py-24">
+      <section id="hudbehov" className="bg-sand scroll-mt-28 py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
           <SectionHead
             kicker="Hitta rätt behandling"
@@ -259,12 +256,12 @@ function Index() {
       </section>
 
       {/* 6. ETT BESÖK */}
-      <section className="bg-syren py-16 md:py-24">
+      <section className="bg-dimbla py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
           <SectionHead kicker="Ditt besök" title="Så går ett besök till" center />
           <ol className="mt-10 grid gap-5 md:grid-cols-4">
             {visitSteps.map(([h, p], i) => (
-              <Reveal as="li" key={h} delay={i * 90} className="rounded-3xl bg-white p-6">
+              <Reveal as="li" key={h} delay={i * 90} className="rounded-2xl bg-white p-6">
                 <span className="grid size-10 place-items-center rounded-full bg-primary font-serif text-lg text-primary-foreground">
                   {i + 1}
                 </span>
@@ -285,7 +282,7 @@ function Index() {
       {/* 7. HEMVÅRD + PRESENTKORT */}
       <section className="py-16 md:py-24">
         <div className="mx-auto grid max-w-[1240px] gap-6 px-6 md:grid-cols-2 md:px-10">
-          <Reveal className="overflow-hidden rounded-3xl bg-white">
+          <Reveal className="overflow-hidden rounded-2xl bg-white">
             <img
               src={butik}
               alt="Butiksskylten på Målarns Gård med blommande syrener"
@@ -293,7 +290,7 @@ function Index() {
               className="aspect-[16/9] w-full object-cover"
             />
             <div className="p-7 md:p-9">
-              <p className="inline-flex items-center gap-2 text-sm font-medium text-tegel">
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-champagne">
                 <ShoppingBag aria-hidden className="size-4" strokeWidth={1.75} /> Hemvård
               </p>
               <h2 className="mt-2 text-3xl">Din hudvård – hem i brevlådan</h2>
@@ -308,14 +305,14 @@ function Index() {
           </Reveal>
           <Reveal
             delay={120}
-            className="flex flex-col justify-between overflow-hidden rounded-3xl bg-primary p-7 text-primary-foreground md:p-9"
+            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-dimbla p-7 text-ink md:p-9"
           >
             <div>
-              <p className="inline-flex items-center gap-2 text-sm font-medium text-white/80">
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-champagne">
                 <Gift aria-hidden className="size-4" strokeWidth={1.75} /> Presentkort
               </p>
               <h2 className="mt-2 text-3xl md:text-4xl">Ge bort en stund som bara är hennes</h2>
-              <p className="mt-3 max-w-md leading-relaxed text-white/85">
+              <p className="mt-3 max-w-md leading-relaxed text-ink/75">
                 Till födelsedagen, Mors dag eller jul. Välj en behandling eller ett belopp – betala
                 med Swish.
               </p>
@@ -323,7 +320,7 @@ function Index() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/presentkort"
-                className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-medium text-ink hover:bg-syren"
+                className="inline-flex min-h-12 items-center rounded-full bg-primary px-7 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-primary-foreground hover:bg-ink"
               >
                 Köp presentkort
               </Link>
@@ -341,7 +338,7 @@ function Index() {
               {generalFaq.map((item) => (
                 <details
                   key={item.question}
-                  className="group rounded-2xl bg-kritvit px-6 py-1 open:pb-5"
+                  className="group rounded-2xl bg-porslin px-6 py-1 open:pb-5"
                 >
                   <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 font-serif text-xl [&::-webkit-details-marker]:hidden">
                     {item.question}
@@ -356,7 +353,7 @@ function Index() {
             </div>
           </div>
           <Reveal delay={120} className="md:col-span-4 md:col-start-9">
-            <div className="rounded-3xl bg-panel p-7">
+            <div className="rounded-2xl bg-sand p-7">
               <h2 className="text-2xl">Praktisk information</h2>
               <ul className="mt-5 space-y-4 text-[0.95rem]">
                 <li className="flex gap-3">
@@ -422,19 +419,19 @@ function Index() {
       {/* 9. AVSLUTANDE BOKNING */}
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
-          <div className="grid overflow-hidden rounded-[2rem] bg-ink text-ink-foreground md:grid-cols-2">
+          <div className="grid overflow-hidden rounded-2xl bg-sand text-ink md:grid-cols-2">
             <div className="flex flex-col justify-center p-8 md:p-14">
-              <Kicker className="text-[#f0b8a8]">Välkommen in</Kicker>
+              <Kicker>Välkommen in</Kicker>
               <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
                 Ta en stund för dig själv.
               </h2>
-              <p className="mt-5 text-lg leading-relaxed text-ink-foreground/80">
+              <p className="mt-5 text-lg leading-relaxed text-ink/75">
                 Boka din tid – eller ring Marita om du vill prata först. Ateljén ligger inne på
                 Målarns Gård, med gratis parkering intill.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <BookButton variant="light" />
-                <ConsultButton variant="light" />
+                <BookButton />
+                <ConsultButton />
               </div>
             </div>
             <img

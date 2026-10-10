@@ -41,7 +41,7 @@ export function Guide() {
         id="hudbehov-svar"
         role="tabpanel"
         aria-live="polite"
-        className="mt-6 grid gap-8 rounded-3xl bg-white p-6 md:grid-cols-12 md:p-10"
+        className="mt-6 grid gap-8 rounded-2xl bg-white p-6 md:grid-cols-12 md:p-10"
       >
         <div className="md:col-span-5">
           <h3 className="text-3xl">{current.label}</h3>

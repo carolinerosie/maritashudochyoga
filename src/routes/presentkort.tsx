@@ -62,9 +62,9 @@ function GiftCards() {
               </li>
             ))}
           </ul>
-          <div className="mt-10 rounded-3xl bg-syren p-6">
+          <div className="mt-10 rounded-2xl bg-rosa p-6">
             <p className="flex items-center gap-3 font-serif text-2xl">
-              <Gift aria-hidden className="size-6 text-tegel" strokeWidth={1.5} />
+              <Gift aria-hidden className="size-6 text-champagne" strokeWidth={1.5} />
               Så köper du
             </p>
             <p className="mt-3 leading-relaxed text-foreground/80">

@@ -43,7 +43,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <MessageSquareText
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-tegel"
+                className="mt-1 size-6 shrink-0 text-champagne"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
@@ -55,7 +55,11 @@ function HomeCare() {
               </p>
             </li>
             <li className="flex gap-4">
-              <Package aria-hidden className="mt-1 size-6 shrink-0 text-tegel" strokeWidth={1.5} />
+              <Package
+                aria-hidden
+                className="mt-1 size-6 shrink-0 text-champagne"
+                strokeWidth={1.5}
+              />
               <p className="leading-relaxed">
                 <strong className="font-semibold">Fri hemleverans.</strong> Produkterna skickas till
                 din brevlåda utan kostnad.
@@ -64,7 +68,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <ShoppingBag
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-tegel"
+                className="mt-1 size-6 shrink-0 text-champagne"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
