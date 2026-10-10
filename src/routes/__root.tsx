@@ -21,9 +21,14 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-6xl">Sidan finns inte</h1>
-        <p className="mt-4 text-sm text-muted-foreground">Den här sidan har flyttat eller finns inte längre.</p>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Den här sidan har flyttat eller finns inte längre.
+        </p>
         <div className="mt-8">
-          <Button asChild className="h-auto rounded-sm bg-primary px-6 py-3 text-sm text-primary-foreground hover:bg-foreground">
+          <Button
+            asChild
+            className="h-auto rounded-sm bg-primary px-6 py-3 text-sm text-primary-foreground hover:bg-foreground"
+          >
             <Link to="/">Till startsidan</Link>
           </Button>
         </div>
@@ -43,7 +48,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-3xl">Sidan kunde inte laddas</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Något gick fel. Försök igen eller gå till startsidan.</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Något gick fel. Försök igen eller gå till startsidan.
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button
             type="button"
@@ -70,7 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Maritas Hud- och Yogaateljé – hudterapeut i Frillesås" },
-      { name: "description", content: "Hudvård, hudkurer och lugn för kropp och sinne på Målarns Gård i Frillesås – nära Åsa och Kungsbacka." },
+      {
+        name: "description",
+        content:
+          "Hudvård, hudkurer och lugn för kropp och sinne på Målarns Gård i Frillesås – nära Åsa och Kungsbacka.",
+      },
       { name: "author", content: "Marita" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Maritas Hud- och Yogaateljé" },
@@ -78,17 +89,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: SHARE_IMAGE },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Maritas Hud- och Yogaateljé – hudterapeut i Frillesås sedan 2001" },
+      {
+        property: "og:image:alt",
+        content: "Maritas Hud- och Yogaateljé – hudterapeut i Frillesås sedan 2001",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: SHARE_IMAGE },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap",
-      },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
@@ -120,7 +128,8 @@ function RootShell({ children }: { children: ReactNode }) {
 function useStartAtTop() {
   useEffect(() => {
     if (typeof window === "undefined" || window.location.hash) return;
-    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const nav = performance.getEntriesByType("navigation")[0] as
+      PerformanceNavigationTiming | undefined;
     if (nav?.type === "back_forward") return;
     const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     toTop();

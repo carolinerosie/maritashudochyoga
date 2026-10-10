@@ -62,7 +62,7 @@ export function SocialLinks({
             rel="noopener noreferrer"
             aria-label={`Marita på ${label}`}
             className={cn(
-              "grid place-items-center rounded-full border border-current/25 transition-colors duration-200 hover:border-current hover:bg-foreground hover:text-background",
+              "grid place-items-center rounded-full border border-current/25 transition-colors duration-200 hover:border-white hover:bg-white hover:text-ink",
               box,
             )}
           >
@@ -128,7 +128,7 @@ export function InstagramFeed() {
     <div className="md:col-span-12">
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-10">
         <div>
-          <p className="eyebrow text-clay">Senaste på Instagram</p>
+          <p className="text-sm font-medium text-tegel">Senaste på Instagram</p>
           <a
             href={social.instagram}
             target="_blank"
@@ -154,13 +154,13 @@ export function InstagramFeed() {
               href={p.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block aspect-square overflow-hidden bg-sand"
+              className="group relative block aspect-square overflow-hidden bg-panel"
             >
               <img
                 src={p.image}
                 alt={p.alt}
                 loading="lazy"
-                className="breathe-img h-full w-full object-cover"
+                className="h-full w-full object-cover"
               />
               <span className="absolute inset-0 grid place-items-center bg-ink/0 text-ink-foreground opacity-0 transition-all duration-300 group-hover:bg-ink/35 group-hover:opacity-100">
                 <InstagramIcon className="size-7" />

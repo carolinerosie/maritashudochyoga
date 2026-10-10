@@ -1,15 +1,25 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "@fontsource/marcellus/400.css";
+@import "@fontsource/jost/400.css";
+@import "@fontsource/jost/500.css";
+@import "@fontsource/jost/600.css";
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Maritas grafiska profil – hämtad från Målarns Gård:
+  kritvit panel, knutblått, tegelrött tak, syren i trädgården.
+  Typsnitt: Marcellus (rubriker) + Jost (brödtext). Mjuka, rundade former och valvformade bilder.
+  Alla text/bakgrund-kombinationer klarar WCAG AA.
+*/
 @theme inline {
-  --font-serif: "Newsreader", Georgia, serif;
-  --font-sans: "Figtree", system-ui, sans-serif;
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
+  --font-serif: "Marcellus", "Times New Roman", serif;
+  --font-sans: "Jost", system-ui, sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -29,43 +39,48 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-sand: var(--sand);
-  --color-clay: var(--clay);
-  --color-amber: var(--amber);
-  --color-moss: var(--moss);
+  --color-kritvit: var(--kritvit);
+  --color-knutbla: var(--knutbla);
+  --color-tegel: var(--tegel);
+  --color-syren: var(--syren);
+  --color-syren-ink: var(--syren-ink);
+  --color-panel: var(--panel);
+  --color-blad: var(--blad);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
 }
 
 :root {
-  /* Maritas grafiska profil – papper/sand, tång (ankare), lera (Huden), bärnsten (Förnyelsen), havsdimma (Lugnet).
-     Alla text/bakgrund-kombinationer klarar WCAG AA. */
-  --radius: 2px;
-  --background: #f5f0e8;
-  --foreground: #26231f;
-  --card: #faf7f1;
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-  --primary: #3f4a3c;
-  --primary-foreground: #f5f0e8;
-  --secondary: #eae2d4;
-  --secondary-foreground: var(--foreground);
-  --muted: #eae2d4;
-  --muted-foreground: #5f574e;
-  --accent: #e2d8c6;
-  --accent-foreground: var(--foreground);
+  --radius: 1rem;
+  --kritvit: #fbf8f3;
+  --knutbla: #234a8c;
+  --tegel: #a3452c;
+  --syren: #f1ebf4;
+  --syren-ink: #6b4e80;
+  --panel: #eef2f7;
+  --blad: #3e6b4f;
+  --ink: #1e2638;
+  --ink-foreground: #fbf8f3;
+
+  --background: var(--kritvit);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--knutbla);
+  --primary-foreground: #ffffff;
+  --secondary: var(--panel);
+  --secondary-foreground: var(--ink);
+  --muted: var(--panel);
+  --muted-foreground: #5a6172;
+  --accent: var(--syren);
+  --accent-foreground: var(--ink);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: rgb(38 35 31 / 18%);
-  --input: rgb(38 35 31 / 28%);
-  --ring: #3f4a3c;
-  --sand: #eae2d4;
-  --clay: #8c5240;
-  --amber: #7e5f24;
-  --moss: #4a6670;
-  --ink: #26231f;
-  --ink-foreground: #f5f0e8;
+  --border: rgb(30 38 56 / 12%);
+  --input: rgb(30 38 56 / 24%);
+  --ring: var(--knutbla);
 }
 
 @layer base {
@@ -83,13 +98,14 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-serif);
-    font-weight: 480;
-    letter-spacing: 0;
-  }
-  em {
-    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.12;
   }
   :focus-visible {
     outline: 2px solid var(--color-ring);
@@ -97,81 +113,73 @@
   }
 }
 
-@utility eyebrow {
+/* Liten etikett ovanför rubriker: tegelröd, med en kort linje framför. */
+@utility kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
   font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--tegel);
+  &::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+  }
 }
 
-/* Mjuk inglidning vid scroll. Innehållet döljs bara när JavaScript är igång,
-   så sidan är alltid läsbar även om skript inte laddas. */
+/* Valvformad bildram – som porten "inne på gården". */
+@utility arch {
+  border-radius: 999px 999px 1.25rem 1.25rem;
+  overflow: hidden;
+}
+
+/* Panelrandning – den vita trästugans stående panel, mycket diskret. */
+@utility panel-stripes {
+  background-color: var(--panel);
+  background-image: repeating-linear-gradient(90deg, transparent 0 46px, rgb(35 74 140 / 7%) 46px 47px);
+}
+
+/* Mjuk inglidning vid scroll. Innehållet döljs bara när JavaScript är igång. */
 @utility reveal {
   @media (scripting: enabled) {
     opacity: 0;
-    transform: translateY(28px);
-    filter: blur(4px);
+    transform: translateY(18px);
     transition:
-      opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.95s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform;
-    & img {
-      transform: scale(1.06);
-      transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     &[data-visible="true"] {
       opacity: 1;
       transform: none;
-      filter: none;
-    }
-    &[data-visible="true"] img {
-      transform: none;
-    }
-    &[data-visible="true"] img.breathe-img:hover {
-      transform: scale(1.025);
     }
   }
 }
 
-@utility breathe-img {
-  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+@utility lift {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   &:hover {
-    transform: scale(1.025);
-  }
-}
-
-@utility wave-draw {
-  stroke-dasharray: 1400;
-  stroke-dashoffset: 1400;
-  transition: stroke-dashoffset 3.2s cubic-bezier(0.45, 0, 0.2, 1);
-  [data-visible="true"] & {
-    stroke-dashoffset: 0;
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -24px rgb(30 38 56 / 45%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
-  .reveal img { transform: none !important; transition: none !important; }
-  .wave-draw { stroke-dashoffset: 0 !important; transition: none !important; }
-  html { scroll-behavior: auto; }
-}
-
-/* Signaturelementet: horisontlinjen med solen. */
-@utility horizon {
-  position: relative;
-  height: 1px;
-  background: linear-gradient(to right, currentColor 0 62%, transparent 62% 66%, currentColor 66%);
-  &::after {
-    content: "";
-    position: absolute;
-    left: 64%;
-    top: 50%;
-    width: 9px;
-    height: 9px;
-    border-radius: 999px;
-    background: currentColor;
-    transform: translate(-50%, -50%);
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .lift,
+  .lift:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }

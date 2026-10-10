@@ -1,284 +1,266 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { ChevronDown, MapPin, Menu, Phone, X } from "lucide-react";
 import {
   BOOKING_URL,
+  byGroup,
   contact,
+  groupOrder,
   groups,
   isExternalBooking,
-  treatments,
-  type Group,
 } from "@/content/site";
 import { BookButton } from "./primitives";
 import { TreatmentLink } from "./TreatmentLink";
 import { InstagramFeed, SocialLinks } from "./Social";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
-function Logo() {
+function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link
       to="/"
       aria-label={`${contact.businessName}, startsida`}
-      className="grid w-fit grid-cols-[2.25rem_auto] items-center gap-2.5"
+      className="flex w-fit items-center gap-3"
     >
-      <img src="/favicon.png" alt="" className="h-9 w-9 object-contain" />
-      <span className="min-w-0">
-        <span className="block font-serif text-[1.2rem] leading-none">Maritas</span>
-        <span className="mt-1 block text-[0.55rem] font-semibold uppercase tracking-[0.12em] text-clay">
-          Hud- och Yogaateljé
+      <img src="/favicon.png" alt="" className="h-10 w-10 object-contain" />
+      <span className="min-w-0 leading-none">
+        <span className={cn("block font-serif text-[1.45rem]", light ? "text-white" : "text-ink")}>
+          Maritas
+        </span>
+        <span
+          className={cn(
+            "mt-1 block text-[0.7rem] tracking-[0.14em]",
+            light ? "text-white/75" : "text-muted-foreground",
+          )}
+        >
+          HUD- OCH YOGAATELJÉ
         </span>
       </span>
     </Link>
   );
 }
 
+const navLinks = [
+  { to: "/prislista", label: "Prislista" },
+  { to: "/presentkort", label: "Presentkort" },
+  { to: "/hemvard", label: "Hemvård" },
+  { to: "/om-marita", label: "Om Marita" },
+  { to: "/kontakt", label: "Hitta hit" },
+] as const;
+
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [treatmentsOpen, setTreatmentsOpen] = useState(false);
-  const treatmentMenu = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menu = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!treatmentsOpen) return;
-    const closeOutside = (event: PointerEvent) => {
-      if (event.target instanceof Node && !treatmentMenu.current?.contains(event.target))
-        setTreatmentsOpen(false);
+    if (!menuOpen) return;
+    const close = (e: PointerEvent) => {
+      if (e.target instanceof Node && !menu.current?.contains(e.target)) setMenuOpen(false);
     };
-    document.addEventListener("pointerdown", closeOutside);
-    return () => document.removeEventListener("pointerdown", closeOutside);
-  }, [treatmentsOpen]);
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 24);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-  const nav = "text-sm text-foreground/75 transition-colors duration-200 hover:text-foreground";
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [menuOpen]);
+
+  const nav = "text-[0.95rem] text-ink/80 transition-colors duration-200 hover:text-primary";
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b border-border bg-background/95 transition-all duration-300 backdrop-blur-sm",
-        scrolled ? "py-2.5" : "py-3.5",
-      )}
-    >
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 md:px-10">
-        <Logo />
-        <nav className="hidden items-center gap-8 md:flex">
-          <div
-            ref={treatmentMenu}
-            className="relative"
-            onMouseEnter={() => setTreatmentsOpen(true)}
-            onMouseLeave={() => setTreatmentsOpen(false)}
-            onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget)) setTreatmentsOpen(false);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") {
-                setTreatmentsOpen(false);
-                treatmentMenu.current?.querySelector("button")?.focus();
-              }
-              if (event.key === "ArrowDown" && event.target instanceof HTMLButtonElement) {
-                event.preventDefault();
-                setTreatmentsOpen(true);
-                requestAnimationFrame(() => treatmentMenu.current?.querySelector("a")?.focus());
-              }
-            }}
-          >
-            <Button
-              variant="ghost"
-              className={cn(nav, "h-11 gap-2 rounded-sm px-0 font-normal hover:bg-transparent")}
-              aria-expanded={treatmentsOpen}
-              aria-controls="desktop-treatment-navigation"
-              onClick={() => setTreatmentsOpen((value) => !value)}
+    <header className="fixed inset-x-0 top-0 z-40">
+      {/* Infolist: adress + telefon, som de flesta salonger har överst */}
+      <div className="hidden bg-ink text-[0.85rem] text-ink-foreground/85 md:block">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-2 md:px-10">
+          <span className="inline-flex items-center gap-2">
+            <MapPin aria-hidden className="size-4" strokeWidth={1.75} />
+            {contact.venue}, {contact.street}, {contact.locality} · Gratis parkering
+          </span>
+          <span className="inline-flex items-center gap-5">
+            <a
+              href={contact.phoneHref}
+              data-event="call_click"
+              className="inline-flex items-center gap-2 hover:text-white"
             >
-              Behandlingar{" "}
-              <span
-                aria-hidden
-                className={cn(
-                  "text-xs transition-transform duration-200",
-                  treatmentsOpen && "rotate-180",
-                )}
+              <Phone aria-hidden className="size-4" strokeWidth={1.75} />
+              {contact.phone}
+            </a>
+            <a href={contact.landlineHref} data-event="call_click" className="hover:text-white">
+              {contact.landline}
+            </a>
+          </span>
+        </div>
+      </div>
+      <div className="border-b border-border bg-kritvit/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-6 px-6 py-3 md:px-10">
+          <Logo />
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Huvudmeny">
+            <div
+              ref={menu}
+              className="relative"
+              onKeyDown={(e) => e.key === "Escape" && setMenuOpen(false)}
+            >
+              <button
+                type="button"
+                className={cn(nav, "inline-flex h-11 items-center gap-1.5")}
+                aria-expanded={menuOpen}
+                aria-controls="meny-behandlingar"
+                onClick={() => setMenuOpen((v) => !v)}
               >
-                ⌄
-              </span>
-            </Button>
-            {treatmentsOpen && (
-              <div className="absolute -left-40 top-full w-[46rem] pt-2">
-                <div
-                  id="desktop-treatment-navigation"
-                  className="grid grid-cols-3 gap-2 rounded-sm border border-border bg-popover p-4 text-popover-foreground shadow-lg"
-                  onClick={() => setTreatmentsOpen(false)}
-                >
-                  {(Object.keys(groups) as Group[]).map((g) => (
-                    <div key={g}>
-                      <p className={cn("eyebrow px-3 pb-2 pt-1 text-[0.68rem]", groups[g].color)}>
-                        {groups[g].label}
-                      </p>
-                      <ul>
-                        {treatments
-                          .filter((t) => t.group === g)
-                          .map((t) => (
+                Behandlingar
+                <ChevronDown
+                  aria-hidden
+                  className={cn("size-4 transition-transform", menuOpen && "rotate-180")}
+                />
+              </button>
+              {menuOpen && (
+                <div className="absolute -left-56 top-full pt-3">
+                  <div
+                    id="meny-behandlingar"
+                    className="grid w-[54rem] grid-cols-3 gap-x-6 gap-y-5 rounded-3xl border border-border bg-white p-6 shadow-xl"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {groupOrder.map((g) => (
+                      <div key={g}>
+                        <Link
+                          to="/behandlingar"
+                          hash={groups[g].slug}
+                          className="text-sm font-medium text-tegel hover:underline"
+                        >
+                          {groups[g].label}
+                        </Link>
+                        <ul className="mt-2">
+                          {byGroup(g).map((t) => (
                             <li key={t.slug}>
                               <TreatmentLink
                                 slug={t.slug}
-                                className="block px-3 py-2 text-sm text-foreground transition-colors duration-200 hover:bg-primary/5 hover:text-primary focus-visible:bg-primary/5"
+                                className="-mx-2 block rounded-lg px-2 py-1.5 text-[0.95rem] text-ink hover:bg-syren"
                               >
                                 {t.name}
                               </TreatmentLink>
                             </li>
                           ))}
-                      </ul>
+                        </ul>
+                      </div>
+                    ))}
+                    <div className="flex flex-col justify-end rounded-2xl bg-panel p-4">
+                      <p className="font-serif text-lg">Vet du inte vad du ska välja?</p>
+                      <Link
+                        to="/"
+                        hash="hudbehov"
+                        className="mt-2 text-sm font-medium text-primary underline underline-offset-4"
+                      >
+                        Sök efter hudbehov →
+                      </Link>
+                      <Link
+                        to="/behandlingar"
+                        className="mt-1 text-sm font-medium text-primary underline underline-offset-4"
+                      >
+                        Alla behandlingar →
+                      </Link>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            {navLinks.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={nav}
+                activeProps={{ className: "text-primary" }}
+              >
+                {l.label}
+              </Link>
+            ))}
+            <BookButton className="min-h-11 px-5 py-2.5" />
+          </nav>
+          <div className="flex items-center gap-2 lg:hidden">
+            <a
+              href={contact.phoneHref}
+              aria-label={`Ring ${contact.phone}`}
+              className="grid size-11 place-items-center rounded-full border border-ink/15 text-ink"
+            >
+              <Phone className="size-5" strokeWidth={1.75} />
+            </a>
+            <button
+              type="button"
+              className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="mobilmeny"
+              aria-label={open ? "Stäng meny" : "Öppna meny"}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
-          <Link to="/om-marita" className={nav} activeProps={{ className: "text-foreground" }}>
-            Om Marita
-          </Link>
-          <Link to="/presentkort" className={nav} activeProps={{ className: "text-foreground" }}>
-            Presentkort
-          </Link>
-          <Link to="/kontakt" className={nav} activeProps={{ className: "text-foreground" }}>
-            Hitta hit
-          </Link>
-          <BookButton className="px-5 py-3">Boka tid</BookButton>
-        </nav>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className="h-11 rounded-sm px-2 text-xs font-semibold uppercase tracking-[0.08em] md:hidden"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-controls="mobile-navigation"
-        >
-          {open ? "Stäng" : "Meny"}
-        </Button>
-      </div>
-      {open && (
-        <div
-          id="mobile-navigation"
-          className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-border bg-background px-6 pb-8 pt-6 shadow-lg md:hidden"
-        >
-          <ul className="divide-y divide-border font-serif text-2xl" onClick={() => setOpen(false)}>
-            <li>
-              <Link className="block py-4" to="/">
-                Start
-              </Link>
-            </li>
-            <li>
-              <Link className="block py-4" to="/" hash="var-sitter-det">
-                Hitta rätt behandling
-              </Link>
-            </li>
-            <li>
-              <Link className="block py-4" to="/" hash="behandlingar">
+        </div>
+        {open && (
+          <div
+            id="mobilmeny"
+            className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-border bg-kritvit px-6 pb-8 pt-4 lg:hidden"
+          >
+            <div onClick={() => setOpen(false)}>
+              <Link to="/behandlingar" className="block py-3 font-serif text-2xl">
                 Behandlingar
               </Link>
-              <div className="pb-4 font-sans text-base">
-                {(Object.keys(groups) as Group[]).map((g) => (
-                  <div key={g} className="pt-2">
-                    <p className={cn("eyebrow pb-1 text-[0.68rem]", groups[g].color)}>
-                      {groups[g].label}
-                    </p>
-                    <ul>
-                      {treatments
-                        .filter((t) => t.group === g)
-                        .map((t) => (
-                          <li key={t.slug}>
-                            <TreatmentLink
-                              slug={t.slug}
-                              className="block py-2 text-foreground/75 hover:text-primary"
-                            >
-                              {t.name}
-                            </TreatmentLink>
-                          </li>
-                        ))}
+              <div className="grid gap-4 pb-4">
+                {groupOrder.map((g) => (
+                  <div key={g}>
+                    <p className="text-sm font-medium text-tegel">{groups[g].label}</p>
+                    <ul className="mt-1">
+                      {byGroup(g).map((t) => (
+                        <li key={t.slug}>
+                          <TreatmentLink slug={t.slug} className="block py-1.5 text-ink/80">
+                            {t.name}
+                          </TreatmentLink>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 ))}
               </div>
-            </li>
-            <li>
-              <Link className="block py-4" to="/om-marita">
-                Om Marita
-              </Link>
-            </li>
-            <li>
-              <Link className="block py-4" to="/presentkort">
-                Presentkort
-              </Link>
-            </li>
-            <li>
-              <Link className="block py-4" to="/hemvard">
-                Hemvård
-              </Link>
-            </li>
-            <li>
-              <Link className="block py-4" to="/kontakt">
-                Hitta hit
-              </Link>
-            </li>
-          </ul>
-          <BookButton className="mt-6 w-full">Boka tid</BookButton>
-          <a
-            href={contact.phoneHref}
-            className="mt-3 flex min-h-12 w-full items-center justify-center border border-foreground/40 text-sm font-semibold"
-          >
-            Ring {contact.phone}
-          </a>
-        </div>
-      )}
+              <ul className="divide-y divide-border border-t border-border font-serif text-2xl">
+                {navLinks.map((l) => (
+                  <li key={l.to}>
+                    <Link to={l.to} className="block py-3">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <BookButton className="mt-6 w-full" />
+          </div>
+        )}
+      </div>
     </header>
   );
 }
 
 export function MobileBookBar() {
   const [visible, setVisible] = useState(false);
-  const [finalCtaVisible, setFinalCtaVisible] = useState(false);
   useEffect(() => {
-    const on = () => setVisible(window.scrollY > Math.min(window.innerHeight * 0.7, 560));
+    const on = () => setVisible(window.scrollY > Math.min(window.innerHeight * 0.6, 480));
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
-  useEffect(() => {
-    const finalCta = document.getElementById("boka-nu");
-    if (!finalCta) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setFinalCtaVisible(Boolean(entry?.isIntersecting)),
-      { threshold: 0.15 },
-    );
-    observer.observe(finalCta);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
       className={cn(
-        "fixed inset-x-3 bottom-3 z-40 grid min-h-14 grid-cols-[1fr_auto] border border-primary-foreground/20 bg-primary text-sm font-semibold text-primary-foreground shadow-lg transition-all duration-500 md:hidden",
-        visible && !finalCtaVisible
-          ? "translate-y-0 opacity-100"
-          : "pointer-events-none translate-y-6 opacity-0",
+        "fixed inset-x-3 bottom-3 z-40 grid grid-cols-2 gap-2 rounded-full bg-white/95 p-1.5 shadow-xl ring-1 ring-ink/10 backdrop-blur transition-all duration-500 lg:hidden",
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0",
       )}
     >
       <a
         href={BOOKING_URL}
         {...(isExternalBooking ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         data-event="booking_click"
-        className="flex items-center px-5 py-4"
+        className="flex min-h-12 items-center justify-center rounded-full bg-primary font-medium text-primary-foreground"
       >
-        Boka tid hos Marita{" "}
-        <span aria-hidden className="ml-2">
-          →
-        </span>
+        Boka tid
       </a>
       <a
         href={contact.phoneHref}
         data-event="call_click"
-        className="flex items-center border-l border-primary-foreground/25 px-5 py-4"
+        className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/15 font-medium text-ink"
       >
+        <Phone aria-hidden className="size-4" strokeWidth={1.75} />
         Ring
       </a>
     </div>
@@ -286,78 +268,84 @@ export function MobileBookBar() {
 }
 
 export function Footer() {
+  const col = "text-sm leading-relaxed text-ink-foreground/80";
+  const a = "underline-offset-4 hover:text-white hover:underline";
   return (
-    <footer className="border-t border-border pb-28 pt-20 md:pb-14">
-      <div className="mx-auto grid max-w-[1280px] gap-12 px-6 md:grid-cols-12 md:px-10">
+    <footer className="bg-ink pb-28 pt-16 text-ink-foreground lg:pb-12">
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-6 md:grid-cols-12 md:px-10">
         <div className="md:col-span-4">
-          <Logo />
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Hudterapeut med egen ateljé på Målarns Gård i Frillesås sedan 2001. Hudvård, hudkurer
-            och lugn för kropp och sinne – nära Åsa, Fjärås och Kungsbacka.
+          <Logo light />
+          <p className={cn(col, "mt-6 max-w-sm")}>
+            Auktoriserad hudterapeut med egen ateljé på Målarns Gård i Frillesås sedan 2001. Nära
+            Åsa, Fjärås, Kungsbacka och Varberg.
           </p>
-        </div>
-        <div className="grid gap-8 sm:grid-cols-3 md:col-span-5">
-          {(Object.keys(groups) as Group[]).map((g) => (
-            <div key={g}>
-              <p className={cn("eyebrow mb-4", groups[g].color)}>{groups[g].label}</p>
-              <ul className="space-y-2 text-sm">
-                {treatments
-                  .filter((t) => t.group === g)
-                  .map((t) => (
-                    <li key={t.slug}>
-                      <TreatmentLink
-                        slug={t.slug}
-                        className="transition-colors duration-200 hover:text-clay"
-                      >
-                        {t.name}
-                      </TreatmentLink>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))}
+          <div className="mt-6">
+            <SocialLinks size="sm" />
+          </div>
         </div>
         <div className="md:col-span-3">
-          <p className="eyebrow mb-4 text-muted-foreground">Besök</p>
-          <address className="text-sm not-italic leading-relaxed">
-            {contact.businessName}
+          <p className="font-serif text-lg text-white">Behandlingar</p>
+          <ul className={cn(col, "mt-4 space-y-2")}>
+            {groupOrder.map((g) => (
+              <li key={g}>
+                <Link to="/behandlingar" hash={groups[g].slug} className={a}>
+                  {groups[g].label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link to="/prislista" className={a}>
+                Prislista
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="md:col-span-2">
+          <p className="font-serif text-lg text-white">Ateljén</p>
+          <ul className={cn(col, "mt-4 space-y-2")}>
+            <li>
+              <Link to="/om-marita" className={a}>
+                Om Marita
+              </Link>
+            </li>
+            <li>
+              <Link to="/presentkort" className={a}>
+                Presentkort
+              </Link>
+            </li>
+            <li>
+              <Link to="/hemvard" className={a}>
+                Hemvård
+              </Link>
+            </li>
+            <li>
+              <Link to="/kontakt" className={a}>
+                Hitta hit
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="md:col-span-3">
+          <p className="font-serif text-lg text-white">Besök & bokning</p>
+          <address className={cn(col, "mt-4 not-italic")}>
+            {contact.venue}
             <br />
-            {contact.venue}, {contact.street}
-            <br />
-            {[contact.postalCode, contact.locality].filter(Boolean).join(" ")}
+            {contact.street}, {[contact.postalCode, contact.locality].filter(Boolean).join(" ")}
           </address>
-          <p className="mt-4 text-sm leading-relaxed">
-            <a
-              href={contact.phoneHref}
-              className="border-b border-foreground/30 hover:border-foreground"
-            >
+          <p className={cn(col, "mt-3")}>
+            <a href={contact.phoneHref} className={a}>
               {contact.phone}
-            </a>
+            </a>{" "}
+            (även sms)
             <br />
-            <a
-              href={contact.landlineHref}
-              className="border-b border-foreground/30 hover:border-foreground"
-            >
+            <a href={contact.landlineHref} className={a}>
               {contact.landline}
             </a>
           </p>
-          <p className="mt-4 text-sm">
-            <Link
-              to="/presentkort"
-              className="border-b border-foreground/30 hover:border-foreground"
-            >
-              Presentkort
-            </Link>
-            {" · "}
-            <Link to="/hemvard" className="border-b border-foreground/30 hover:border-foreground">
-              Hemvård
-            </Link>
-          </p>
-          <p className="eyebrow mb-3 mt-10 text-muted-foreground">Följ Marita</p>
-          <SocialLinks size="sm" />
+          <p className={cn(col, "mt-3")}>{contact.payment}</p>
         </div>
         <InstagramFeed />
-        <p className="text-xs text-muted-foreground md:col-span-12">
+        <p className="border-t border-white/15 pt-6 text-xs text-ink-foreground/60 md:col-span-12">
           © {new Date().getFullYear()} {contact.businessName}
         </p>
       </div>
