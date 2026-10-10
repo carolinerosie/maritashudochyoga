@@ -256,7 +256,7 @@ function Index() {
       </section>
 
       {/* 6. ETT BESÖK */}
-      <section className="bg-dimbla py-16 md:py-24">
+      <section className="bg-hav-tint py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
           <SectionHead kicker="Ditt besök" title="Så går ett besök till" center />
           <ol className="mt-10 grid gap-5 md:grid-cols-4">
@@ -290,7 +290,7 @@ function Index() {
               className="aspect-[16/9] w-full object-cover"
             />
             <div className="p-7 md:p-9">
-              <p className="inline-flex items-center gap-2 text-sm font-medium text-champagne">
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-jord-ink">
                 <ShoppingBag aria-hidden className="size-4" strokeWidth={1.75} /> Hemvård
               </p>
               <h2 className="mt-2 text-3xl">Din hudvård – hem i brevlådan</h2>
@@ -305,10 +305,10 @@ function Index() {
           </Reveal>
           <Reveal
             delay={120}
-            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-dimbla p-7 text-ink md:p-9"
+            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-hav-tint p-7 text-ink md:p-9"
           >
             <div>
-              <p className="inline-flex items-center gap-2 text-sm font-medium text-champagne">
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-jord-ink">
                 <Gift aria-hidden className="size-4" strokeWidth={1.75} /> Presentkort
               </p>
               <h2 className="mt-2 text-3xl md:text-4xl">Ge bort en stund som bara är hennes</h2>
@@ -338,7 +338,7 @@ function Index() {
               {generalFaq.map((item) => (
                 <details
                   key={item.question}
-                  className="group rounded-2xl bg-porslin px-6 py-1 open:pb-5"
+                  className="group rounded-2xl bg-linne px-6 py-1 open:pb-5"
                 >
                   <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 font-serif text-xl [&::-webkit-details-marker]:hidden">
                     {item.question}

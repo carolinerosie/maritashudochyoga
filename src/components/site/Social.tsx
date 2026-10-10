@@ -128,7 +128,7 @@ export function InstagramFeed() {
     <div className="md:col-span-12">
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-10">
         <div>
-          <p className="text-sm font-medium text-champagne">Senaste på Instagram</p>
+          <p className="text-sm font-medium text-jord-ink">Senaste på Instagram</p>
           <a
             href={social.instagram}
             target="_blank"

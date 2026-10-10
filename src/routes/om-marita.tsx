@@ -81,7 +81,7 @@ function About() {
               <ul className="mt-4 space-y-3 border-t border-border pt-6 text-base">
                 {[...trustProof.items, "Behandlingsskadeförsäkring"].map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <BadgeCheck aria-hidden className="size-5 text-champagne" strokeWidth={1.5} />
+                    <BadgeCheck aria-hidden className="size-5 text-jord-ink" strokeWidth={1.5} />
                     {item}
                   </li>
                 ))}

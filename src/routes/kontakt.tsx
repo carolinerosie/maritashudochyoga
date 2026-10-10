@@ -55,7 +55,7 @@ function Contact() {
           <dl className="mt-16 divide-y divide-border border-y border-border">
             <div className={row}>
               <dt className={dt}>
-                <Phone aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                <Phone aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                 Telefon
               </dt>
               <dd className="min-w-0 space-y-1">
@@ -71,7 +71,7 @@ function Contact() {
             </div>
             <div className={row}>
               <dt className={dt}>
-                <CalendarCheck aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                <CalendarCheck aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                 Bokning
               </dt>
               <dd className="min-w-0">
@@ -84,7 +84,7 @@ function Contact() {
             {contact.email ? (
               <div className={row}>
                 <dt className={dt}>
-                  <Mail aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                  <Mail aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                   E-post
                 </dt>
                 <dd className="min-w-0">
@@ -97,7 +97,7 @@ function Contact() {
             {contact.openingHours ? (
               <div className={row}>
                 <dt className={dt}>
-                  <Clock aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                  <Clock aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                   Öppettider
                 </dt>
                 <dd className="min-w-0">{contact.openingHours}</dd>
@@ -105,7 +105,7 @@ function Contact() {
             ) : null}
             <div className={row}>
               <dt className={dt}>
-                <MapPin aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                <MapPin aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                 Ateljén
               </dt>
               <dd className="min-w-0">
@@ -129,14 +129,14 @@ function Contact() {
             </div>
             <div className={row}>
               <dt className={dt}>
-                <Car aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                <Car aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                 Parkering
               </dt>
               <dd className="min-w-0">Gratis parkering intill ateljén.</dd>
             </div>
             <div className={row}>
               <dt className={dt}>
-                <Wallet aria-hidden className="size-4 text-champagne" strokeWidth={1.5} />
+                <Wallet aria-hidden className="size-4 text-jord-ink" strokeWidth={1.5} />
                 Betalning
               </dt>
               <dd className="min-w-0">

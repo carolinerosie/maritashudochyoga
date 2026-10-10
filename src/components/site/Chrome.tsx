@@ -21,7 +21,11 @@ function Logo({ light = false }: { light?: boolean }) {
       aria-label={`${contact.businessName}, startsida`}
       className="flex w-fit items-center gap-3"
     >
-      <img src="/favicon.png" alt="" className={cn("h-10 w-10 object-contain", light && "rounded-lg bg-white p-1")} />
+      <img
+        src="/favicon.png"
+        alt=""
+        className={cn("h-10 w-10 object-contain", light && "rounded-lg bg-white p-1")}
+      />
       <span className="min-w-0 leading-none">
         <span className={cn("block font-serif text-[1.45rem]", light ? "text-white" : "text-ink")}>
           Maritas
@@ -64,7 +68,7 @@ export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-40">
       {/* Infolist: adress + telefon, som de flesta salonger har överst */}
-      <div className="hidden bg-havsbla text-[0.82rem] text-white/90 md:block">
+      <div className="hidden bg-sand text-[0.82rem] text-ink/80 md:block">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-2 md:px-10">
           <span className="inline-flex items-center gap-2">
             <MapPin aria-hidden className="size-4" strokeWidth={1.75} />
@@ -74,18 +78,18 @@ export function Header() {
             <a
               href={contact.phoneHref}
               data-event="call_click"
-              className="inline-flex items-center gap-2 hover:text-white"
+              className="inline-flex items-center gap-2 hover:text-ink"
             >
               <Phone aria-hidden className="size-4" strokeWidth={1.75} />
               {contact.phone}
             </a>
-            <a href={contact.landlineHref} data-event="call_click" className="hover:text-white">
+            <a href={contact.landlineHref} data-event="call_click" className="hover:text-ink">
               {contact.landline}
             </a>
           </span>
         </div>
       </div>
-      <div className="border-b border-border bg-porslin/95 backdrop-blur">
+      <div className="border-b border-border bg-linne/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-6 px-6 py-3 md:px-10">
           <Logo />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Huvudmeny">
@@ -119,7 +123,7 @@ export function Header() {
                         <Link
                           to="/behandlingar"
                           hash={groups[g].slug}
-                          className="text-sm font-medium text-champagne hover:underline"
+                          className="text-sm font-medium text-jord-ink hover:underline"
                         >
                           {groups[g].label}
                         </Link>
@@ -128,7 +132,7 @@ export function Header() {
                             <li key={t.slug}>
                               <TreatmentLink
                                 slug={t.slug}
-                                className="-mx-2 block rounded-lg px-2 py-1.5 text-[0.95rem] text-ink hover:bg-rosa"
+                                className="-mx-2 block rounded-lg px-2 py-1.5 text-[0.95rem] text-ink hover:bg-salvia-tint"
                               >
                                 {t.name}
                               </TreatmentLink>
@@ -192,7 +196,7 @@ export function Header() {
         {open && (
           <div
             id="mobilmeny"
-            className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-border bg-porslin px-6 pb-8 pt-4 lg:hidden"
+            className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-border bg-linne px-6 pb-8 pt-4 lg:hidden"
           >
             <div onClick={() => setOpen(false)}>
               <Link to="/behandlingar" className="block py-3 font-serif text-2xl">
@@ -201,7 +205,7 @@ export function Header() {
               <div className="grid gap-4 pb-4">
                 {groupOrder.map((g) => (
                   <div key={g}>
-                    <p className="text-sm font-medium text-champagne">{groups[g].label}</p>
+                    <p className="text-sm font-medium text-jord-ink">{groups[g].label}</p>
                     <ul className="mt-1">
                       {byGroup(g).map((t) => (
                         <li key={t.slug}>
@@ -271,7 +275,7 @@ export function Footer() {
   const col = "text-sm leading-relaxed text-white/85";
   const a = "underline-offset-4 hover:text-white hover:underline";
   return (
-    <footer className="bg-havsbla pb-28 pt-16 text-white lg:pb-12">
+    <footer className="bg-ink pb-28 pt-16 text-white lg:pb-12">
       <div className="mx-auto grid max-w-[1240px] gap-12 px-6 md:grid-cols-12 md:px-10">
         <div className="md:col-span-4">
           <Logo light />

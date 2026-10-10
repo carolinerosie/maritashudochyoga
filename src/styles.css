@@ -11,11 +11,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Maritas grafiska profil – ljus, fräsch och omhändertagande:
-  vitt och porslin som bas, sand från stranden, dämpat havsblått som huvudfärg,
-  dimblått som ljus ton, champagne som diskret detalj och en mjuk skalton för omsorg.
+  Maritas grafiska profil – ljus, fräsch, lyxig och omhändertagande.
+  Palett: Sand #E9E3DA · Linne #F5F3EE · Salvia #A7B29E · Hav #8FA7B0 · Jord #C9B69E · Kol #3C3C3C.
+  Mörkare nyanser (hav-ink, jord-ink, salvia-ink) används för text och länkar så att allt klarar WCAG AA.
   Typsnitt: Cormorant Garamond (rubriker) + Jost (brödtext), självhostade.
-  Alla text/bakgrund-kombinationer klarar WCAG AA.
 */
 @theme inline {
   --font-serif: "Cormorant Garamond", Georgia, serif;
@@ -42,50 +41,56 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-porslin: var(--porslin);
+  --color-linne: var(--linne);
   --color-sand: var(--sand);
-  --color-havsbla: var(--havsbla);
-  --color-dimbla: var(--dimbla);
-  --color-champagne: var(--champagne);
-  --color-champagne-light: var(--champagne-light);
-  --color-rosa: var(--rosa);
-  --color-rosa-ink: var(--rosa-ink);
+  --color-salvia: var(--salvia);
+  --color-salvia-tint: var(--salvia-tint);
+  --color-salvia-ink: var(--salvia-ink);
+  --color-hav: var(--hav);
+  --color-hav-tint: var(--hav-tint);
+  --color-hav-ink: var(--hav-ink);
+  --color-jord: var(--jord);
+  --color-jord-ink: var(--jord-ink);
+  --color-kol: var(--kol);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
 }
 
 :root {
   --radius: 0.75rem;
-  --porslin: #fcfaf7;
-  --sand: #f1eadf;
-  --havsbla: #34506a;
-  --dimbla: #e9eff3;
-  --champagne: #7a5c36;
-  --champagne-light: #c9b08a;
-  --rosa: #f6eeea;
-  --rosa-ink: #7a5a4e;
-  --ink: #2b2a2e;
-  --ink-foreground: #fbf9f6;
+  --linne: #f5f3ee;
+  --sand: #e9e3da;
+  --salvia: #a7b29e;
+  --salvia-tint: #e8ebe3;
+  --salvia-ink: #55604c;
+  --hav: #8fa7b0;
+  --hav-tint: #e4eaec;
+  --hav-ink: #4a6470;
+  --jord: #c9b69e;
+  --jord-ink: #6e5b47;
+  --kol: #3c3c3c;
+  --ink: var(--kol);
+  --ink-foreground: var(--linne);
 
-  --background: var(--porslin);
+  --background: var(--linne);
   --foreground: var(--ink);
   --card: #ffffff;
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--havsbla);
+  --primary: var(--hav-ink);
   --primary-foreground: #ffffff;
   --secondary: var(--sand);
   --secondary-foreground: var(--ink);
   --muted: var(--sand);
-  --muted-foreground: #6a5f55;
-  --accent: var(--rosa);
+  --muted-foreground: #5f5a55;
+  --accent: var(--hav-tint);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: rgb(43 42 46 / 10%);
-  --input: rgb(43 42 46 / 22%);
-  --ring: var(--havsbla);
+  --border: rgb(60 60 60 / 11%);
+  --input: rgb(60 60 60 / 24%);
+  --ring: var(--hav-ink);
 }
 
 @layer base {
@@ -123,7 +128,7 @@
   }
 }
 
-/* Liten etikett ovanför rubriker: versaler med luft, i champagne. */
+/* Liten etikett ovanför rubriker: versaler med luft, i jord. */
 @utility kicker {
   display: inline-flex;
   align-items: center;
@@ -133,12 +138,12 @@
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--champagne);
+  color: var(--jord-ink);
   &::before {
     content: "";
     width: 2rem;
     height: 1px;
-    background: var(--champagne-light);
+    background: var(--jord);
   }
 }
 

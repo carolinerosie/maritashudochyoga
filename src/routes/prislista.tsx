@@ -99,7 +99,7 @@ function PriceList() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 rounded-2xl bg-rosa p-8 md:grid-cols-2 md:p-10">
+        <div className="mt-12 grid gap-6 rounded-2xl bg-salvia-tint p-8 md:grid-cols-2 md:p-10">
           <div>
             <h2 className="text-3xl">Boka din tid</h2>
             <p className="mt-3 text-ink/75">

@@ -43,7 +43,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <MessageSquareText
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-champagne"
+                className="mt-1 size-6 shrink-0 text-jord-ink"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
@@ -57,7 +57,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <Package
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-champagne"
+                className="mt-1 size-6 shrink-0 text-jord-ink"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
@@ -68,7 +68,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <ShoppingBag
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-champagne"
+                className="mt-1 size-6 shrink-0 text-jord-ink"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">

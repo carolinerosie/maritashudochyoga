@@ -69,7 +69,7 @@ export function TreatmentArticle({
                     {duration}
                   </span>
                 ) : null}
-                <span className="rounded-full bg-rosa px-4 py-2 font-medium text-rosa-ink">
+                <span className="rounded-full bg-salvia-tint px-4 py-2 font-medium text-salvia-ink">
                   {fromPrice(t)}
                 </span>
               </div>
@@ -97,7 +97,7 @@ export function TreatmentArticle({
                 <li key={f} className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-rosa text-rosa-ink"
+                    className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-salvia-tint text-salvia-ink"
                   >
                     <Check className="size-3.5" strokeWidth={2.25} />
                   </span>
@@ -109,7 +109,7 @@ export function TreatmentArticle({
             <p className="mt-4 text-lg leading-relaxed text-ink/80">{t.what}</p>
           </Reveal>
           <Reveal delay={120} className="md:col-span-5">
-            <div id="pris" className="rounded-2xl bg-dimbla p-7 text-ink md:p-9">
+            <div id="pris" className="rounded-2xl bg-hav-tint p-7 text-ink md:p-9">
               <h2 className="text-3xl">Pris & tid</h2>
               <dl className="mt-5 divide-y divide-ink/10">
                 {t.prices.map((p) => (
@@ -161,14 +161,14 @@ export function TreatmentArticle({
                 <p className="mt-4 leading-relaxed">{d}</p>
               </Reveal>
             ))}
-            <Reveal as="li" className="rounded-2xl bg-rosa p-6 sm:col-span-2">
-              <p className="font-serif text-xl text-rosa-ink">Med dig hem</p>
+            <Reveal as="li" className="rounded-2xl bg-salvia-tint p-6 sm:col-span-2">
+              <p className="font-serif text-xl text-salvia-ink">Med dig hem</p>
               <ul className="mt-3 space-y-2">
                 {t.takeaway.map((x) => (
                   <li key={x} className="flex gap-3 leading-relaxed">
                     <Check
                       aria-hidden
-                      className="mt-1 size-4 shrink-0 text-rosa-ink"
+                      className="mt-1 size-4 shrink-0 text-salvia-ink"
                       strokeWidth={2}
                     />
                     {x}
@@ -193,7 +193,7 @@ export function TreatmentArticle({
                 />
               </div>
               <figcaption className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="size-4 text-champagne" strokeWidth={1.75} aria-hidden />
+                <MapPin className="size-4 text-jord-ink" strokeWidth={1.75} aria-hidden />
                 {contact.venue}, {contact.street}, {contact.locality}
               </figcaption>
             </figure>
@@ -258,7 +258,7 @@ export function TreatmentArticle({
       {/* BOKA */}
       <section className="pb-16 md:pb-24">
         <div className="mx-auto max-w-[1240px] px-6 md:px-10">
-          <div className="grid gap-8 rounded-2xl bg-rosa p-8 md:grid-cols-12 md:p-12">
+          <div className="grid gap-8 rounded-2xl bg-salvia-tint p-8 md:grid-cols-12 md:p-12">
             <div className="md:col-span-7">
               <h2 className="text-4xl leading-tight">Vill du boka – eller prata först?</h2>
               <p className="mt-4 text-lg text-ink/75">
