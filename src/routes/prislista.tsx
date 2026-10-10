@@ -76,9 +76,7 @@ function PriceList() {
                           <dt className="leading-snug">
                             {p.label}
                             {p.duration ? (
-                              <span className="ml-2 text-sm text-muted-foreground">
-                                · {p.duration}
-                              </span>
+                              <span className="block text-sm text-muted-foreground sm:ml-2 sm:inline">{p.duration}</span>
                             ) : null}
                           </dt>
                           <dd
