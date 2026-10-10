@@ -5,7 +5,8 @@ import {
   absoluteUrl,
   BOOKING_URL,
   contact,
-  FLAGSHIP_SLUG,
+  fromPrice,
+  POPULARITY_ORDER,
   getTreatment,
   groups,
   guideOptions,
@@ -49,8 +50,13 @@ describe("Behandlingar och områden", () => {
   it("varje område har minst en behandling", () => {
     for (const g of Object.keys(groups)) expect(treatments.some((t) => t.group === g)).toBe(true);
   });
-  it("flaggskeppet finns", () => {
-    expect(getTreatment(FLAGSHIP_SLUG)?.name).toBe("Tibetansk faceliftmassage");
+  it("popularitetsordningen täcker alla behandlingar och styr ordningen", () => {
+    expect([...POPULARITY_ORDER].sort()).toEqual(treatments.map((t) => t.slug).sort());
+    expect(treatments.map((t) => t.slug)).toEqual(POPULARITY_ORDER);
+  });
+  it("från-pris räknas från prislistan", () => {
+    expect(fromPrice(getTreatment("hudanalys")!)).toBe("från 200 kr");
+    expect(fromPrice(getTreatment("ansiktsbehandlingar")!)).toBe("från 490 kr");
   });
   it("unika slugs", () => {
     expect(new Set(treatments.map((t) => t.slug)).size).toBe(treatments.length);

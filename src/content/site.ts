@@ -153,7 +153,7 @@ export type Treatment = {
 
 const HEMVARD_NOTE = "Lägre pris för dig som köper din hudvård hos Marita.";
 
-export const treatments: Treatment[] = [
+const allTreatments: Treatment[] = [
   // ---------------- HUDEN ----------------
   {
     slug: "hudanalys",
@@ -942,12 +942,53 @@ export const treatments: Treatment[] = [
   },
 ];
 
+/**
+ * Ordning efter popularitet – de mest bokade först. Styr ordningen överallt på sajten
+ * (startsidan, menyn, områdeskorten och sidfoten). Alla behandlingar visas lika stort.
+ * ANTAGANDE: ordningen är en gissning tills Marita har bekräftat vilka som bokas mest.
+ * Ändra bara ordningen i listan här.
+ */
+export const POPULARITY_ORDER = [
+  "ansiktsbehandlingar",
+  "massage-varma-stenar",
+  "massage",
+  "esse-ekologisk-ansiktsbehandling",
+  "hudanalys",
+  "tibetansk-faceliftmassage",
+  "acnebehandling",
+  "neostrata",
+  "hudslipning-koppning",
+  "microneedling",
+  "prx-plus",
+  "beroring-reiki-healing",
+  "fransar-bryn-epilering",
+  "ryggbehandling",
+  "ansiktsbehandling-for-man",
+  "infuzion",
+  "aha-pha-kur",
+  "livsstilscoach",
+];
+
+const rank = (slug: string) => {
+  const i = POPULARITY_ORDER.indexOf(slug);
+  return i === -1 ? POPULARITY_ORDER.length : i;
+};
+
+export const treatments: Treatment[] = [...allTreatments].sort(
+  (a, b) => rank(a.slug) - rank(b.slug),
+);
+
 export function getTreatment(slug: string) {
   return treatments.find((t) => t.slug === slug);
 }
 
-/** Flaggskeppet som lyfts på startsidan. */
-export const FLAGSHIP_SLUG = "tibetansk-faceliftmassage";
+/** Lägsta pris för en behandling, för "från"-texten på korten. */
+export function fromPrice(t: Treatment) {
+  const nums = t.prices
+    .map((p) => Number((p.price.match(/[\d\s]+/)?.[0] ?? "").replace(/\s/g, "")))
+    .filter((n) => n > 0);
+  return nums.length ? `från ${Math.min(...nums).toLocaleString("sv-SE")} kr` : "";
+}
 
 export type GuideOption = {
   id: string;

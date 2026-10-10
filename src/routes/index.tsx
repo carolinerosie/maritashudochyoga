@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import {
   absoluteUrl,
-  FLAGSHIP_SLUG,
+  fromPrice,
   getTreatment,
   groups,
   localBusinessJsonLd,
@@ -111,7 +111,6 @@ const steps: [LucideIcon, string, string][] = [
 
 function Index() {
   const review = testimonials[0];
-  const flagship = getTreatment(FLAGSHIP_SLUG);
   return (
     <>
       {/* 1. HERO */}
@@ -282,93 +281,55 @@ function Index() {
         </div>
       </section>
 
-      {/* 5. FLAGGSKEPP + ALLA BEHANDLINGAR */}
+      {/* 5. ALLA BEHANDLINGAR – lika stora kort, mest populära först */}
       <section id="behandlingar" className="scroll-mt-20 border-t border-border py-16 md:py-28">
         <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-          {flagship ? (
-            <div className="grid gap-12 md:grid-cols-12">
-              <Reveal className="md:col-span-7">
-                <TreatmentLink slug={flagship.slug} className="group block">
-                  <div className="aspect-[5/4] overflow-hidden">
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-2xl">
+              <Eyebrow>Behandlingar</Eyebrow>
+              <h2 className="mt-5 text-4xl leading-tight md:text-5xl">
+                Alla behandlingar. <em>Välj det som passar dig.</em>
+              </h2>
+            </div>
+            <p className="text-sm text-muted-foreground">Huden · Förnyelsen · Lugnet</p>
+          </Reveal>
+          <ul className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {treatments.map((t, i) => (
+              <Reveal as="li" key={t.slug} delay={(i % 3) * 80}>
+                <TreatmentLink slug={t.slug} className="group flex h-full flex-col">
+                  <span className="block aspect-[4/3] overflow-hidden">
                     <img
-                      src={flagship.image}
-                      alt={flagship.imageAlt}
+                      src={t.image}
+                      alt=""
+                      loading="lazy"
                       className="breathe-img h-full w-full object-cover"
                     />
-                  </div>
+                  </span>
+                  <span className="mt-4 flex items-baseline justify-between gap-4">
+                    <span className={cn("eyebrow text-[0.7rem]", groups[t.group].color)}>
+                      {groups[t.group].label}
+                    </span>
+                    <span className="text-sm text-muted-foreground">{fromPrice(t)}</span>
+                  </span>
+                  <span className="mt-2 flex items-center justify-between gap-4">
+                    <span
+                      className="min-w-0 hyphens-auto font-serif text-2xl md:text-[1.7rem]"
+                      lang="sv"
+                    >
+                      {t.name}
+                    </span>
+                    <span
+                      aria-hidden
+                      className="text-xl text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </span>
+                  <span className="mt-2 block leading-relaxed text-foreground/70">{t.short}</span>
                 </TreatmentLink>
               </Reveal>
-              <Reveal delay={200} className="flex flex-col justify-end md:col-span-5">
-                <Eyebrow className="text-amber">Unikt i ateljén</Eyebrow>
-                <h2 className="mt-4 hyphens-auto text-5xl md:text-6xl" lang="sv">
-                  {flagship.name}
-                </h2>
-                <p className="mt-6 text-lg leading-relaxed text-foreground/80">
-                  Ett naturligt lyft utan nålar. Fyra behandlingar med bindvävsmassage, lymfdränage,
-                  akupressur och oljemassage som arbetar med ett 90-tal muskler i ansikte,
-                  hårbotten, hals och nacke.
-                </p>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  Provbehandling 1 150 kr · 4 behandlingar 4 200 kr
-                </p>
-                <div className="mt-8 flex flex-wrap gap-6">
-                  <BookButton>Boka provbehandling</BookButton>
-                  <TreatmentLink slug={flagship.slug} className={secondaryLinkClass}>
-                    Läs mer
-                  </TreatmentLink>
-                </div>
-              </Reveal>
-            </div>
-          ) : null}
-
-          <div className="mt-16 md:mt-24">
-            <div className="flex items-baseline justify-between gap-6">
-              <Eyebrow>Alla behandlingar</Eyebrow>
-              <p className="hidden text-sm text-muted-foreground md:block">
-                Huden · Förnyelsen · Lugnet
-              </p>
-            </div>
-            <ul className="mt-8 grid gap-x-16 gap-y-2 md:grid-cols-2">
-              {treatments
-                .filter((t) => t.slug !== FLAGSHIP_SLUG)
-                .map((t, i) => (
-                  <Reveal as="li" key={t.slug} delay={(i % 4) * 80}>
-                    <TreatmentLink
-                      slug={t.slug}
-                      className="group grid min-w-0 grid-cols-[5.5rem_minmax(0,1fr)] items-start gap-5 py-6 md:grid-cols-[7rem_minmax(0,1fr)] md:gap-7"
-                    >
-                      <span className="block aspect-square overflow-hidden">
-                        <img
-                          src={t.image}
-                          alt=""
-                          loading="lazy"
-                          className="breathe-img h-full w-full object-cover"
-                        />
-                      </span>
-                      <span className="block min-w-0">
-                        <span className={cn("eyebrow text-[0.7rem]", groups[t.group].color)}>
-                          {groups[t.group].label}
-                        </span>
-                        <span className="mt-2 flex items-center justify-between gap-5">
-                          <span
-                            className="min-w-0 hyphens-auto font-serif text-2xl transition-transform duration-200 group-hover:translate-x-1 md:text-3xl"
-                            lang="sv"
-                          >
-                            {t.name}
-                          </span>
-                          <span className="text-xl text-muted-foreground transition-transform duration-200 group-hover:translate-x-1">
-                            →
-                          </span>
-                        </span>
-                        <span className="mt-2 block max-w-md leading-relaxed text-foreground/70">
-                          {t.short}
-                        </span>
-                      </span>
-                    </TreatmentLink>
-                  </Reveal>
-                ))}
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
       </section>
 
