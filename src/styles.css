@@ -6,7 +6,7 @@
 
 @theme inline {
   --font-serif: "Newsreader", Georgia, serif;
-  --font-sans: "Albert Sans", system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
@@ -31,39 +31,41 @@
   --color-ring: var(--ring);
   --color-sand: var(--sand);
   --color-clay: var(--clay);
-  --color-aubergine: var(--aubergine);
+  --color-amber: var(--amber);
   --color-moss: var(--moss);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
 }
 
 :root {
+  /* Maritas grafiska profil – papper/sand, tång (ankare), lera (Huden), bärnsten (Förnyelsen), havsdimma (Lugnet).
+     Alla text/bakgrund-kombinationer klarar WCAG AA. */
   --radius: 2px;
-  --background: oklch(0.9591 0.0074 80.72);
-  --foreground: oklch(0.2828 0.0192 337.1);
-  --card: oklch(0.982 0.004 80.72);
+  --background: #f5f0e8;
+  --foreground: #26231f;
+  --card: #faf7f1;
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.365 0.085 8);
-  --primary-foreground: oklch(0.9591 0.0074 80.72);
-  --secondary: oklch(0.917 0.014 61);
+  --primary: #3f4a3c;
+  --primary-foreground: #f5f0e8;
+  --secondary: #eae2d4;
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.917 0.014 61);
-  --muted-foreground: oklch(0.43 0.02 337.1);
-  --accent: oklch(0.8677 0.0078 48.64);
+  --muted: #eae2d4;
+  --muted-foreground: #5f574e;
+  --accent: #e2d8c6;
   --accent-foreground: var(--foreground);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.2828 0.0192 337.1 / 18%);
-  --input: oklch(0.2828 0.0192 337.1 / 28%);
-  --ring: oklch(0.365 0.085 8);
-  --sand: oklch(0.917 0.014 61);
-  --clay: oklch(0.515 0.116 32.85);
-  --aubergine: oklch(0.365 0.085 8);
-  --moss: oklch(0.4368 0.0417 160.63);
-  --ink: oklch(0.2828 0.0192 337.1);
-  --ink-foreground: oklch(0.9591 0.0074 80.72);
+  --border: rgb(38 35 31 / 18%);
+  --input: rgb(38 35 31 / 28%);
+  --ring: #3f4a3c;
+  --sand: #eae2d4;
+  --clay: #8c5240;
+  --amber: #7e5f24;
+  --moss: #4a6670;
+  --ink: #26231f;
+  --ink-foreground: #f5f0e8;
 }
 
 @layer base {
@@ -154,4 +156,22 @@
   .reveal img { transform: none !important; transition: none !important; }
   .wave-draw { stroke-dashoffset: 0 !important; transition: none !important; }
   html { scroll-behavior: auto; }
+}
+
+/* Signaturelementet: horisontlinjen med solen. */
+@utility horizon {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(to right, currentColor 0 62%, transparent 62% 66%, currentColor 66%);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 64%;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+  }
 }

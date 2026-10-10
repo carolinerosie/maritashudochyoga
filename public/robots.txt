@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.skapadinhalsa.com/sitemap.xml
+Sitemap: https://maritashudoyoga.se/sitemap.xml

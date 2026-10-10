@@ -3,7 +3,14 @@ import { INSTAGRAM_FEED_URL, social } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 type IconProps = SVGProps<SVGSVGElement>;
-const base = { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+const base = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+} as const;
 
 export function InstagramIcon(props: IconProps) {
   return (
@@ -32,7 +39,13 @@ export function FacebookIcon(props: IconProps) {
 }
 
 /** Ikonrad med de sociala kanaler som har en adress i src/content/site.ts. */
-export function SocialLinks({ className, size = "md" }: { className?: string; size?: "sm" | "md" }) {
+export function SocialLinks({
+  className,
+  size = "md",
+}: {
+  className?: string;
+  size?: "sm" | "md";
+}) {
   const links = [
     { href: social.instagram, label: "Instagram", Icon: InstagramIcon },
     { href: social.tiktok, label: "TikTok", Icon: TikTokIcon },
@@ -47,7 +60,7 @@ export function SocialLinks({ className, size = "md" }: { className?: string; si
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Anna Flatöe på ${label}`}
+            aria-label={`Marita på ${label}`}
             className={cn(
               "grid place-items-center rounded-full border border-current/25 transition-colors duration-200 hover:border-current hover:bg-foreground hover:text-background",
               box,
@@ -75,7 +88,7 @@ type BeholdPost = {
 };
 
 /**
- * Annas fyra senaste Instagram-inlägg, inbäddade i sidfoten.
+ * Maritas fyra senaste Instagram-inlägg, inbäddade i sidfoten.
  * Hämtas från Behold-flödet i INSTAGRAM_FEED_URL (src/content/site.ts) och uppdateras automatiskt.
  * Visas bara när riktiga inlägg finns – inga reservbilder.
  */
@@ -93,8 +106,11 @@ export function InstagramFeed() {
           .map((p) => ({
             id: p.id,
             permalink: p.permalink,
-            image: p.sizes?.medium?.mediaUrl ?? (p.mediaType === "VIDEO" ? p.thumbnailUrl : p.mediaUrl) ?? "",
-            alt: p.altText || p.prunedCaption?.slice(0, 120) || "Inlägg från @skapadinhalsa på Instagram",
+            image:
+              p.sizes?.medium?.mediaUrl ??
+              (p.mediaType === "VIDEO" ? p.thumbnailUrl : p.mediaUrl) ??
+              "",
+            alt: p.altText || p.prunedCaption?.slice(0, 120) || "Inlägg från Maritas Instagram",
           }))
           .filter((p) => p.image)
           .slice(0, 4);
@@ -113,19 +129,39 @@ export function InstagramFeed() {
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-10">
         <div>
           <p className="eyebrow text-clay">Senaste på Instagram</p>
-          <a href={social.instagram} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-serif text-2xl hover:text-primary">
+          <a
+            href={social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-block font-serif text-2xl hover:text-primary"
+          >
             {social.instagramHandle}
           </a>
         </div>
-        <a href={social.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 border-b border-foreground/30 text-sm font-semibold hover:border-foreground">
+        <a
+          href={social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 items-center gap-2 border-b border-foreground/30 text-sm font-semibold hover:border-foreground"
+        >
           Följ på Instagram <span aria-hidden>↗</span>
         </a>
       </div>
       <ul className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
         {posts.map((p) => (
           <li key={p.id}>
-            <a href={p.permalink} target="_blank" rel="noopener noreferrer" className="group relative block aspect-square overflow-hidden bg-sand">
-              <img src={p.image} alt={p.alt} loading="lazy" className="breathe-img h-full w-full object-cover" />
+            <a
+              href={p.permalink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block aspect-square overflow-hidden bg-sand"
+            >
+              <img
+                src={p.image}
+                alt={p.alt}
+                loading="lazy"
+                className="breathe-img h-full w-full object-cover"
+              />
               <span className="absolute inset-0 grid place-items-center bg-ink/0 text-ink-foreground opacity-0 transition-all duration-300 group-hover:bg-ink/35 group-hover:opacity-100">
                 <InstagramIcon className="size-7" />
               </span>

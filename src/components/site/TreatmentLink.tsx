@@ -7,13 +7,14 @@ type TreatmentLinkProps = {
   className?: string;
 };
 
+/** Gemensam länk till en behandlingssida. Alla behandlingar ligger under /behandlingar/:slug. */
 export function TreatmentLink({ slug, children, className }: TreatmentLinkProps) {
-  if (slug === "lymfmassage") {
-    return <Link to="/lymfmassage" className={className}>{children}</Link>;
-  }
-
   return (
-    <Link to="/behandlingar/$slug" params={{ slug }} className={className as ComponentProps<typeof Link>["className"]}>
+    <Link
+      to="/behandlingar/$slug"
+      params={{ slug }}
+      className={className as ComponentProps<typeof Link>["className"]}
+    >
       {children}
     </Link>
   );

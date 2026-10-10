@@ -1,18 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import { BatteryLow, Bone, Brain, Check, Compass, Droplets, Moon, Repeat, type LucideIcon } from "lucide-react";
+import {
+  Check,
+  CircleDot,
+  Compass,
+  Droplet,
+  Flower2,
+  Gift,
+  Leaf,
+  Sparkles,
+  Wind,
+  type LucideIcon,
+} from "lucide-react";
 import { getTreatment, groups, guideOptions, type GuideOption } from "@/content/site";
 import { BookButton, ConsultButton } from "./primitives";
 import { TreatmentLink } from "./TreatmentLink";
 import { cn } from "@/lib/utils";
 
 const icons: Record<string, LucideIcon> = {
-  kake: Moon,
-  huvud: Brain,
-  tung: Droplets,
-  vark: Bone,
-  stress: BatteryLow,
-  monster: Repeat,
-  vetinte: Compass,
+  trott: Droplet,
+  linjer: Sparkles,
+  pigment: CircleDot,
+  oren: Leaf,
+  kanslig: Flower2,
+  spand: Wind,
+  vanor: Compass,
+  present: Gift,
 };
 
 function Answer({ option }: { option: GuideOption }) {
@@ -27,12 +39,22 @@ function Answer({ option }: { option: GuideOption }) {
           if (!t) return null;
           return (
             <li key={slug}>
-              <TreatmentLink slug={slug} className="group flex items-center justify-between gap-4 py-4">
+              <TreatmentLink
+                slug={slug}
+                className="group flex items-center justify-between gap-4 py-4"
+              >
                 <span>
-                  <span className={cn("eyebrow mr-3 text-[0.62rem]", groups[t.group].color)}>{groups[t.group].label}</span>
+                  <span className={cn("eyebrow mr-3 text-[0.62rem]", groups[t.group].color)}>
+                    {groups[t.group].label}
+                  </span>
                   <span className="font-serif text-xl">{t.name}</span>
                 </span>
-                <span aria-hidden className="text-muted-foreground transition-transform duration-200 group-hover:translate-x-1">→</span>
+                <span
+                  aria-hidden
+                  className="text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
+                </span>
               </TreatmentLink>
             </li>
           );
@@ -52,7 +74,7 @@ function Answer({ option }: { option: GuideOption }) {
  * Mobil: svaret fälls ut direkt under valet, och det valda påståendet hålls kvar i bild.
  */
 export function Guide() {
-  const [active, setActive] = useState<string>("kake");
+  const [active, setActive] = useState<string>(guideOptions[0]?.id ?? "");
   const [userChose, setUserChose] = useState(false);
   const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
   const current = guideOptions.find((o) => o.id === active);
@@ -74,13 +96,21 @@ export function Guide() {
   return (
     <div className="grid min-w-0 gap-10 lg:grid-cols-12 lg:gap-16">
       <div className="min-w-0 lg:col-span-6">
-        <p className="mb-4 text-sm font-semibold text-foreground/70">Tryck på det som stämmer bäst:</p>
+        <p className="mb-4 text-sm font-semibold text-foreground/70">
+          Tryck på det som stämmer bäst:
+        </p>
         <ul className="min-w-0 space-y-2" role="list">
           {guideOptions.map((o) => {
             const on = o.id === active;
             const Icon = icons[o.id] ?? Compass;
             return (
-              <li key={o.id} ref={(el) => { itemRefs.current[o.id] = el; }} className="scroll-mt-24">
+              <li
+                key={o.id}
+                ref={(el) => {
+                  itemRefs.current[o.id] = el;
+                }}
+                className="scroll-mt-24"
+              >
                 <button
                   type="button"
                   onClick={() => {
@@ -105,19 +135,26 @@ export function Guide() {
                   >
                     <Icon className="size-5" strokeWidth={1.5} />
                   </span>
-                  <span className="min-w-0 font-serif text-lg leading-snug md:text-xl">{o.feeling}</span>
+                  <span className="min-w-0 font-serif text-lg leading-snug md:text-xl">
+                    {o.feeling}
+                  </span>
                   <span
                     aria-hidden
                     className={cn(
                       "grid size-6 place-items-center rounded-full border transition-colors duration-200",
-                      on ? "border-primary bg-primary text-primary-foreground" : "border-foreground/30",
+                      on
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-foreground/30",
                     )}
                   >
                     {on ? <Check className="size-3.5" strokeWidth={2.5} /> : null}
                   </span>
                 </button>
                 {on && (
-                  <div id={`guide-answer-${o.id}`} className="border-x border-b border-primary lg:hidden">
+                  <div
+                    id={`guide-answer-${o.id}`}
+                    className="border-x border-b border-primary lg:hidden"
+                  >
                     <Answer option={o} />
                   </div>
                 )}
@@ -129,7 +166,9 @@ export function Guide() {
       <div className="hidden lg:col-span-6 lg:block">
         <div className="sticky top-28 border border-primary" aria-live="polite">
           <div className="flex items-center gap-3 border-b border-border bg-background px-10 pt-8 pb-6">
-            <span className="eyebrow shrink-0 whitespace-nowrap text-muted-foreground">Du valde</span>
+            <span className="eyebrow shrink-0 whitespace-nowrap text-muted-foreground">
+              Du valde
+            </span>
             <span className="font-serif text-lg italic text-foreground">”{current.feeling}”</span>
           </div>
           <Answer option={current} />

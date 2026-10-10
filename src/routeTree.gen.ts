@@ -10,9 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HemvardRouteImport } from './routes/hemvard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
-import { Route as LymfmassageRouteImport } from './routes/lymfmassage'
-import { Route as OmAnnaRouteImport } from './routes/om-anna'
+import { Route as OmMaritaRouteImport } from './routes/om-marita'
+import { Route as PresentkortRouteImport } from './routes/presentkort'
 import { Route as BehandlingarSlugRouteImport } from './routes/behandlingar.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -20,19 +21,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HemvardRoute = HemvardRouteImport.update({
+  id: '/hemvard',
+  path: '/hemvard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KontaktRoute = KontaktRouteImport.update({
   id: '/kontakt',
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LymfmassageRoute = LymfmassageRouteImport.update({
-  id: '/lymfmassage',
-  path: '/lymfmassage',
+const OmMaritaRoute = OmMaritaRouteImport.update({
+  id: '/om-marita',
+  path: '/om-marita',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OmAnnaRoute = OmAnnaRouteImport.update({
-  id: '/om-anna',
-  path: '/om-anna',
+const PresentkortRoute = PresentkortRouteImport.update({
+  id: '/presentkort',
+  path: '/presentkort',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BehandlingarSlugRoute = BehandlingarSlugRouteImport.update({
@@ -43,46 +49,62 @@ const BehandlingarSlugRoute = BehandlingarSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/hemvard': typeof HemvardRoute
   '/kontakt': typeof KontaktRoute
-  '/lymfmassage': typeof LymfmassageRoute
-  '/om-anna': typeof OmAnnaRoute
+  '/om-marita': typeof OmMaritaRoute
+  '/presentkort': typeof PresentkortRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/hemvard': typeof HemvardRoute
   '/kontakt': typeof KontaktRoute
-  '/lymfmassage': typeof LymfmassageRoute
-  '/om-anna': typeof OmAnnaRoute
+  '/om-marita': typeof OmMaritaRoute
+  '/presentkort': typeof PresentkortRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/hemvard': typeof HemvardRoute
   '/kontakt': typeof KontaktRoute
-  '/lymfmassage': typeof LymfmassageRoute
-  '/om-anna': typeof OmAnnaRoute
+  '/om-marita': typeof OmMaritaRoute
+  '/presentkort': typeof PresentkortRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/kontakt' | '/lymfmassage' | '/om-anna' | '/behandlingar/$slug'
+    | '/'
+    | '/hemvard'
+    | '/kontakt'
+    | '/om-marita'
+    | '/presentkort'
+    | '/behandlingar/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kontakt' | '/lymfmassage' | '/om-anna' | '/behandlingar/$slug'
+  to:
+    | '/'
+    | '/hemvard'
+    | '/kontakt'
+    | '/om-marita'
+    | '/presentkort'
+    | '/behandlingar/$slug'
   id:
     | '__root__'
     | '/'
+    | '/hemvard'
     | '/kontakt'
-    | '/lymfmassage'
-    | '/om-anna'
+    | '/om-marita'
+    | '/presentkort'
     | '/behandlingar/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HemvardRoute: typeof HemvardRoute
   KontaktRoute: typeof KontaktRoute
-  LymfmassageRoute: typeof LymfmassageRoute
-  OmAnnaRoute: typeof OmAnnaRoute
+  OmMaritaRoute: typeof OmMaritaRoute
+  PresentkortRoute: typeof PresentkortRoute
   BehandlingarSlugRoute: typeof BehandlingarSlugRoute
 }
 
@@ -95,6 +117,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hemvard': {
+      id: '/hemvard'
+      path: '/hemvard'
+      fullPath: '/hemvard'
+      preLoaderRoute: typeof HemvardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kontakt': {
       id: '/kontakt'
       path: '/kontakt'
@@ -102,18 +131,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontaktRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lymfmassage': {
-      id: '/lymfmassage'
-      path: '/lymfmassage'
-      fullPath: '/lymfmassage'
-      preLoaderRoute: typeof LymfmassageRouteImport
+    '/om-marita': {
+      id: '/om-marita'
+      path: '/om-marita'
+      fullPath: '/om-marita'
+      preLoaderRoute: typeof OmMaritaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/om-anna': {
-      id: '/om-anna'
-      path: '/om-anna'
-      fullPath: '/om-anna'
-      preLoaderRoute: typeof OmAnnaRouteImport
+    '/presentkort': {
+      id: '/presentkort'
+      path: '/presentkort'
+      fullPath: '/presentkort'
+      preLoaderRoute: typeof PresentkortRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/behandlingar/$slug': {
@@ -128,9 +157,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HemvardRoute: HemvardRoute,
   KontaktRoute: KontaktRoute,
-  LymfmassageRoute: LymfmassageRoute,
-  OmAnnaRoute: OmAnnaRoute,
+  OmMaritaRoute: OmMaritaRoute,
+  PresentkortRoute: PresentkortRoute,
   BehandlingarSlugRoute: BehandlingarSlugRoute,
 }
 export const routeTree = rootRouteImport
