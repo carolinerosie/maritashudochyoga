@@ -3,6 +3,7 @@ import imgAnsiktsmassage from "@/assets/stamning-ansiktsmassage.jpg";
 import imgAnsikteHals from "@/assets/stamning-ansikte-hals.jpg";
 import imgMassageRum from "@/assets/stamning-massage-rum.jpg";
 import imgBeroring from "@/assets/stamning-beroring.jpg";
+import imgRum from "@/assets/ateljen-behandlingsrum.jpg";
 
 /**
  * Bokningslänk för alla "Boka tid"-knappar.
@@ -91,38 +92,52 @@ export const localBusinessJsonLd = {
 export const trustProof = {
   since: "2001",
   headline: "Egen ateljé sedan 2001",
-  items: ["Auktoriserad hudterapeut (SHR)", "CIDESCO", "Säker hudterapeut"],
+  items: [
+    "Auktoriserad hudterapeut (SHR)",
+    "CIDESCO",
+    "Säker hudterapeut",
+    "Behandlingsskadeförsäkring",
+  ],
   location: "Frillesås · Kungsbacka kommun",
   rating: "",
   reviews: "",
 };
 
-export type Group = "hud" | "fornyelse" | "lugn";
+/** Behandlingskategorier – så som kunder letar hos en hudterapeut. Ordningen styr menyer och listor. */
+export type Group = "ansikte" | "kurer" | "kropp" | "fransar" | "halsa";
 
-export const groups: Record<
-  Group,
-  { label: string; lead: string; text: string; color: string; bg: string }
-> = {
-  hud: {
-    label: "Huden",
-    lead: "Ansikts- och hudvård",
-    text: "Behandlingar som ger huden balans, fukt och lyster – och en hemvård som passar just din hud.",
-    color: "text-clay",
-    bg: "bg-clay",
+export const groupOrder: Group[] = ["ansikte", "kurer", "kropp", "fransar", "halsa"];
+
+export const groups: Record<Group, { label: string; lead: string; text: string; slug: string }> = {
+  ansikte: {
+    label: "Ansiktsbehandlingar",
+    lead: "Rengöring, fukt och lyster",
+    text: "Klassiska, ekologiska och lyxiga ansiktsbehandlingar som anpassas efter din hud – från en snabb Fresh Up till 90 minuters Ansiktslyx.",
+    slug: "ansiktsbehandlingar",
   },
-  fornyelse: {
-    label: "Förnyelsen",
-    lead: "Hudkurer med resultat",
-    text: "Kurer i flera steg för dig som vill se skillnad på linjer, pigment, porer eller ärr – utan injektioner.",
-    color: "text-amber",
-    bg: "bg-amber",
+  kurer: {
+    label: "Hudkurer & resultat",
+    lead: "För linjer, pigment, porer och ärr",
+    text: "Behandlingar i flera steg för dig som vill se skillnad – utan injektioner. Du får en plan, ett totalpris och eftervård.",
+    slug: "hudkurer",
   },
-  lugn: {
-    label: "Lugnet",
-    lead: "Kropp och sinne",
-    text: "Värme, beröring och tid för dig själv. För när kroppen är spänd och tankarna behöver landa.",
-    color: "text-moss",
-    bg: "bg-moss",
+  kropp: {
+    label: "Massage & kropp",
+    lead: "Värme, beröring och återhämtning",
+    text: "Massage med varma stenar, avslappningsmassage, ryggbehandling och beröring i tystnad.",
+    slug: "massage-och-kropp",
+  },
+  fransar: {
+    label: "Fransar, bryn & epilering",
+    lead: "Färgning, formning och hårborttagning",
+    text: "Färgning och formning av fransar och bryn, epilering med växelström och make up-rådgivning.",
+    slug: "fransar-bryn-epilering",
+  },
+  halsa: {
+    label: "Hälsa & livsstil",
+    lead: "Kost, vanor och stöd",
+    text: "Coachning i hälsa, kost och livsstil – en plan tillsammans och uppföljning.",
+    slug: "halsa-och-livsstil",
   },
 };
 
@@ -158,7 +173,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "hudanalys",
     name: "Hudanalys",
-    group: "hud",
+    group: "ansikte",
     short: "En kvart som visar vad din hud behöver – och vilken hemvård som passar dig.",
     image: imgMask,
     imageAlt: "Stämningsbild: en ansiktsmask penslas på med en solfjäderpensel",
@@ -201,7 +216,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "ansiktsbehandlingar",
     name: "Ansiktsbehandlingar",
-    group: "hud",
+    group: "ansikte",
     short: "Klassiska och lyxiga ansiktsbehandlingar med Maria Åkerbergs hudvård.",
     image: imgMask,
     imageAlt: "Stämningsbild: en ansiktsmask penslas på med en solfjäderpensel",
@@ -256,7 +271,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "esse-ekologisk-ansiktsbehandling",
     name: "Esse ekologisk ansiktsbehandling",
-    group: "hud",
+    group: "ansikte",
     short: "Ekologisk ansiktsbehandling med probiotika – för alla åldrar och de flesta hudtyper.",
     image: imgAnsiktsmassage,
     imageAlt: "Stämningsbild: lugn ansiktsmassage med mjuka handgrepp",
@@ -296,7 +311,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "neostrata",
     name: "Neostrata ansiktsbehandling",
-    group: "hud",
+    group: "ansikte",
     short: "Ansiktsbehandling med AHA-PHA-peeling för en jämnare, klarare hud.",
     image: imgMask,
     imageAlt: "Stämningsbild: en ansiktsmask penslas på med en solfjäderpensel",
@@ -341,7 +356,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "acnebehandling",
     name: "Acnebehandling",
-    group: "hud",
+    group: "ansikte",
     short: "För oren hud, igensatta porer och finnar – en lugn plan i stället för ännu en produkt.",
     image: imgAnsiktsmassage,
     imageAlt: "Stämningsbild: lugn ansiktsbehandling med mjuka handgrepp",
@@ -385,10 +400,10 @@ const allTreatments: Treatment[] = [
   {
     slug: "ryggbehandling",
     name: "Ryggbehandling",
-    group: "hud",
+    group: "kropp",
     short: "Djuprengöring av ryggen – där det är svårt att nå själv.",
-    image: imgMassageRum,
-    imageAlt: "Stämningsbild: behandling i ett varmt, ombonat behandlingsrum",
+    image: imgRum,
+    imageAlt: "Behandlingsrummet i Maritas ateljé med behandlingsbänk och turkosa handdukar",
     forWho: [
       "Har orenheter på ryggen",
       "Vill ha en ren och mjuk hud inför sommaren",
@@ -423,7 +438,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "ansiktsbehandling-for-man",
     name: "Ansiktsbehandling för män",
-    group: "hud",
+    group: "ansikte",
     short: "Ren hud och avspända axlar. Rakt och enkelt.",
     image: imgAnsiktsmassage,
     imageAlt: "Stämningsbild: ansiktsmassage med mjuka handgrepp",
@@ -462,7 +477,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "fransar-bryn-epilering",
     name: "Fransar, bryn & epilering",
-    group: "hud",
+    group: "fransar",
     short: "Färgning och formning av fransar och bryn, epilering och make up-råd.",
     image: imgMask,
     imageAlt: "Stämningsbild: hudvård appliceras med pensel",
@@ -511,7 +526,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "tibetansk-faceliftmassage",
     name: "Tibetansk faceliftmassage",
-    group: "fornyelse",
+    group: "kurer",
     short:
       "Ett naturligt lyft utan nålar – fyra behandlingar som arbetar med ansiktets alla muskler.",
     image: imgAnsikteHals,
@@ -570,7 +585,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "microneedling",
     name: "Microneedling",
-    group: "fornyelse",
+    group: "kurer",
     short: "Stimulerar hudens egen förnyelse – för linjer, ärr, pigment och slapp hud.",
     image: imgAnsiktsmassage,
     imageAlt: "Stämningsbild: ansiktsbehandling med lugna handgrepp",
@@ -615,7 +630,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "infuzion",
     name: "Infuzion",
-    group: "fornyelse",
+    group: "kurer",
     short: "Nålfri behandling som för ner hyaluronsyra och vitaminer i huden.",
     image: imgMask,
     imageAlt: "Stämningsbild: serum appliceras med solfjäderpensel",
@@ -652,7 +667,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "prx-plus",
     name: "PRX-PLUS",
-    group: "fornyelse",
+    group: "kurer",
     short: "Ny generations TCA-peeling – utan nålar.",
     image: imgAnsikteHals,
     imageAlt: "Stämningsbild: behandling av ansikte och hals",
@@ -694,7 +709,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "aha-pha-kur",
     name: "AHA-PHA-kur",
-    group: "fornyelse",
+    group: "kurer",
     short: "Sex behandlingar som bygger upp huden på nytt – tillsammans med hemvård.",
     image: imgMask,
     imageAlt: "Stämningsbild: en ansiktsmask penslas på",
@@ -732,7 +747,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "hudslipning-koppning",
     name: "Hudslipning & koppning",
-    group: "fornyelse",
+    group: "kurer",
     short: "Föryngrande och återfuktande – med direkt effekt på linjer och svullnad.",
     image: imgAnsiktsmassage,
     imageAlt: "Stämningsbild: ansiktsbehandling med mjuka handgrepp",
@@ -774,7 +789,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "massage-varma-stenar",
     name: "Massage med varma stenar",
-    group: "lugn",
+    group: "kropp",
     short: "Helkroppsmassage där värmen får både kropp och sinne att slappna av.",
     image: imgMassageRum,
     imageAlt: "Stämningsbild: massage i ett varmt, ombonat behandlingsrum",
@@ -808,10 +823,10 @@ const allTreatments: Treatment[] = [
   {
     slug: "massage",
     name: "Massage",
-    group: "lugn",
+    group: "kropp",
     short: "Avslappningsmassage, rygg och nacke eller fötter och underben.",
-    image: imgMassageRum,
-    imageAlt: "Stämningsbild: nackmassage i ett varmt behandlingsrum",
+    image: imgRum,
+    imageAlt: "Behandlingsrummet i Maritas ateljé med behandlingsbänk och turkosa handdukar",
     forWho: [
       "Är spänd i rygg, nacke eller axlar",
       "Har trötta ben och fötter",
@@ -855,7 +870,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "beroring-reiki-healing",
     name: "Beröring, Reiki & healing",
-    group: "lugn",
+    group: "kropp",
     short: "Beröringsmassage i tystnad, kombinerad med Reiki och healing.",
     image: imgBeroring,
     imageAlt: "Stämningsbild: en behandlare lägger handen lätt på en vilande kunds panna",
@@ -900,7 +915,7 @@ const allTreatments: Treatment[] = [
   {
     slug: "livsstilscoach",
     name: "Hälsa-, kost- och livsstilscoach",
-    group: "lugn",
+    group: "halsa",
     short: "När du vill ändra vanor – och få stöd hela vägen.",
     image: imgBeroring,
     imageAlt: "Stämningsbild: en lugn stund på behandlingsbänken",
@@ -990,69 +1005,86 @@ export function fromPrice(t: Treatment) {
   return nums.length ? `från ${Math.min(...nums).toLocaleString("sv-SE")} kr` : "";
 }
 
-export type GuideOption = {
+/** Hitta behandling efter hudbehov – hur de flesta letar hos en hudterapeut. */
+export type Concern = {
   id: string;
-  feeling: string;
-  reply: string;
+  label: string;
+  text: string;
   treatments: string[];
 };
 
-export const guideOptions: GuideOption[] = [
+export const concerns: Concern[] = [
   {
-    id: "trott",
-    feeling: "Min hud känns trött och glåmig",
-    reply:
-      "Då behöver huden ofta fukt och lyster. En ansiktsbehandling är ett skönt sätt att börja – och du får råd om hemvård som passar dig.",
-    treatments: ["ansiktsbehandlingar", "esse-ekologisk-ansiktsbehandling"],
+    id: "akne",
+    label: "Akne & orenheter",
+    text: "Igensatta porer, finnar och oren hud – i tonåren eller som vuxen. Vi börjar med en plan och en hemrutin som håller.",
+    treatments: ["acnebehandling", "aha-pha-kur", "neostrata"],
   },
   {
-    id: "linjer",
-    feeling: "Jag har fått fler linjer och tappat spänst",
-    reply:
-      "Vill du ta hand om ansiktet utan injektioner kan tibetansk faceliftmassage eller microneedling passa. Börja gärna med en provbehandling.",
-    treatments: ["tibetansk-faceliftmassage", "microneedling"],
+    id: "rodnad",
+    label: "Rodnad & känslig hud",
+    text: "Synliga blodkärl, rodnad eller en hud som reagerar lätt. Milda produkter och lugna behandlingar.",
+    treatments: ["ansiktsbehandlingar", "esse-ekologisk-ansiktsbehandling"],
   },
   {
     id: "pigment",
-    feeling: "Jag har pigment eller ärr som stör",
-    reply:
-      "Pigment och ärr behöver oftast en kur i flera steg. Vi gör en plan tillsammans – och jag säger ärligt vad som är rimligt.",
-    treatments: ["prx-plus", "microneedling"],
+    label: "Pigment & solskador",
+    text: "Ojämn hudton och pigment efter sol. Ofta en kur i flera steg, gärna under den mörka delen av året.",
+    treatments: ["prx-plus", "microneedling", "aha-pha-kur"],
   },
   {
-    id: "oren",
-    feeling: "Jag har oren hud eller finnar",
-    reply:
-      "Vi börjar med att titta på din hud – inte med en ny produkt. Sedan får du en plan och en hemrutin som håller.",
-    treatments: ["acnebehandling", "aha-pha-kur"],
+    id: "linjer",
+    label: "Linjer & fasthet",
+    text: "Fler linjer och mindre spänst. Naturliga alternativ utan injektioner – med massage, peeling eller microneedling.",
+    treatments: ["tibetansk-faceliftmassage", "microneedling", "hudslipning-koppning"],
   },
   {
-    id: "kanslig",
-    feeling: "Min hud är röd och känslig",
-    reply:
-      "Känslig hud behöver lugn och milda produkter. AntiRouge och Esse är skonsamma val. Har du en hudsjukdom, prata med vården först.",
-    treatments: ["ansiktsbehandlingar", "esse-ekologisk-ansiktsbehandling"],
+    id: "torr",
+    label: "Torr & trött hud",
+    text: "Huden känns stram, glåmig eller livlös. Fukt, lyster och en hemvård som passar dig.",
+    treatments: ["esse-ekologisk-ansiktsbehandling", "infuzion", "ansiktsbehandlingar"],
   },
   {
-    id: "spand",
-    feeling: "Jag är spänd och behöver landa",
-    reply:
-      "Ibland behöver kroppen värme och tystnad mer än något annat. Varma stenar eller beröring i lugn och ro är en bra början.",
-    treatments: ["massage-varma-stenar", "beroring-reiki-healing"],
+    id: "stress",
+    label: "Stress & spänningar",
+    text: "Spänd i nacke och rygg, eller behöver bara landa. Värme, massage och beröring i lugn och ro.",
+    treatments: ["massage-varma-stenar", "massage", "beroring-reiki-healing"],
+  },
+];
+
+/** Vanliga frågor om besöket – samlade för startsida och kontakt. Bara uppgifter från Maritas egen sajt. */
+export const generalFaq: { question: string; answer: string }[] = [
+  {
+    question: "Hur bokar jag?",
+    answer:
+      "Ring eller skicka ett sms till 0702-38 46 54, eller ring 0340-65 73 88. Är du osäker på vad du ska välja kan du ringa för ett konsultationssamtal.",
   },
   {
-    id: "vanor",
-    feeling: "Jag vill ändra vanor men kommer inte igång",
-    reply:
-      "Det är vanligt att veta vad man borde göra men inte orka börja. Vi gör en plan tillsammans och följer upp.",
-    treatments: ["livsstilscoach"],
+    question: "Hur betalar jag?",
+    answer: "Med Swish eller Bankgiro. Ateljén tar inte emot kontanter.",
   },
   {
-    id: "present",
-    feeling: "Jag vill ge bort något fint",
-    reply:
-      "Ge bort tid i stället för en sak. Ett presentkort på en behandling uppskattas av de flesta – även den som har allt.",
-    treatments: ["massage-varma-stenar", "tibetansk-faceliftmassage"],
+    question: "Vad händer om jag inte kan komma?",
+    answer:
+      "Uteblivet besök debiteras med behandlingens pris. Hör av dig så snart du vet att du inte kan komma.",
+  },
+  {
+    question: "Var parkerar jag?",
+    answer: "Det finns gratis parkering intill ateljén på Målarns Gård, Målarns väg 5 i Frillesås.",
+  },
+  {
+    question: "Varför finns det två priser på vissa behandlingar?",
+    answer: "Det lägre priset gäller dig som köper din hudvård hos Marita.",
+  },
+  {
+    question: "Kan jag köpa presentkort?",
+    answer:
+      "Ja. Ring eller sms:a Marita och berätta vilken behandling eller vilket belopp du vill ge bort.",
+  },
+  {
+    question: "Hur beställer jag hudvård?",
+    answer:
+      "Skicka ett sms med vad du vill ha – produkterna skickas hem till din brevlåda utan kostnad. Neostrata/Exuviance finns även i webbshoppen.",
   },
 ];
 
@@ -1064,7 +1096,20 @@ export const publicPaths = [
   "/",
   "/om-marita",
   "/kontakt",
+  "/behandlingar",
+  "/prislista",
   "/presentkort",
   "/hemvard",
   ...treatments.map((t) => `/behandlingar/${t.slug}`),
 ];
+
+/** De mest populära behandlingarna (lyfts på startsidan). */
+export const popularTreatments = treatments.slice(0, 6);
+
+/** Behandlingar per kategori, i popularitetsordning. */
+export const byGroup = (g: Group) => treatments.filter((t) => t.group === g);
+
+/** Längd att visa på kort (första angivna). */
+export function durationOf(t: Treatment) {
+  return t.prices.find((p) => p.duration)?.duration ?? "";
+}

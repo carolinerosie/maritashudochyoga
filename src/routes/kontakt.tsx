@@ -32,7 +32,7 @@ export const Route = createFileRoute("/kontakt")({
 });
 
 const row = "grid grid-cols-[8.5rem_minmax(0,1fr)] gap-x-4 py-5";
-const dt = "eyebrow flex items-center gap-2 text-muted-foreground";
+const dt = "text-sm font-medium flex items-center gap-2 text-muted-foreground";
 const link = "border-b border-foreground/30 hover:border-foreground";
 
 function Contact() {
@@ -42,7 +42,7 @@ function Contact() {
         <Reveal className="md:col-span-5">
           <Eyebrow>Hitta hit</Eyebrow>
           <h1 className="mt-5 text-5xl leading-[1.05] md:text-6xl">
-            Välkommen till <em className="text-clay">Målarns Gård.</em>
+            Välkommen till <em className="not-italic text-primary">Målarns Gård.</em>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-foreground/80">
             Ateljén ligger inne på gården i Frillesås, några minuter från havet. Hör av dig för att
@@ -55,7 +55,7 @@ function Contact() {
           <dl className="mt-16 divide-y divide-border border-y border-border">
             <div className={row}>
               <dt className={dt}>
-                <Phone aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                <Phone aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                 Telefon
               </dt>
               <dd className="min-w-0 space-y-1">
@@ -71,7 +71,7 @@ function Contact() {
             </div>
             <div className={row}>
               <dt className={dt}>
-                <CalendarCheck aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                <CalendarCheck aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                 Bokning
               </dt>
               <dd className="min-w-0">
@@ -84,7 +84,7 @@ function Contact() {
             {contact.email ? (
               <div className={row}>
                 <dt className={dt}>
-                  <Mail aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                  <Mail aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                   E-post
                 </dt>
                 <dd className="min-w-0">
@@ -97,7 +97,7 @@ function Contact() {
             {contact.openingHours ? (
               <div className={row}>
                 <dt className={dt}>
-                  <Clock aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                  <Clock aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                   Öppettider
                 </dt>
                 <dd className="min-w-0">{contact.openingHours}</dd>
@@ -105,7 +105,7 @@ function Contact() {
             ) : null}
             <div className={row}>
               <dt className={dt}>
-                <MapPin aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                <MapPin aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                 Ateljén
               </dt>
               <dd className="min-w-0">
@@ -129,14 +129,14 @@ function Contact() {
             </div>
             <div className={row}>
               <dt className={dt}>
-                <Car aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                <Car aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                 Parkering
               </dt>
               <dd className="min-w-0">Gratis parkering intill ateljén.</dd>
             </div>
             <div className={row}>
               <dt className={dt}>
-                <Wallet aria-hidden className="size-4 text-clay" strokeWidth={1.5} />
+                <Wallet aria-hidden className="size-4 text-tegel" strokeWidth={1.5} />
                 Betalning
               </dt>
               <dd className="min-w-0">
@@ -148,7 +148,7 @@ function Contact() {
 
         <div className="space-y-6 md:col-span-6 md:col-start-7">
           <Reveal delay={150}>
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="arch aspect-[4/5]">
               <img
                 src={ateljen}
                 alt="Ateljén på Målarns Gård – vit trästuga med blå knutar, skylten Välkommen och flaggor för SHR och Maria Åkerberg"
@@ -202,7 +202,7 @@ function Contact() {
               Vägbeskrivning i Google Maps <span aria-hidden>↗</span>
             </a>
           </div>
-          <div className="mt-8 aspect-[4/5] overflow-hidden border border-border bg-sand sm:aspect-[16/9] md:aspect-[21/9]">
+          <div className="mt-8 aspect-[4/5] overflow-hidden rounded-3xl border border-border bg-panel sm:aspect-[16/9] md:aspect-[21/9]">
             <iframe
               src={contact.mapsEmbedUrl}
               title={`Karta: ${contact.venue}, ${contact.street}, ${contact.locality}`}

@@ -38,7 +38,7 @@ function GiftCards() {
         <Reveal className="md:col-span-6">
           <Eyebrow>Presentkort</Eyebrow>
           <h1 className="mt-5 text-5xl leading-[1.05] md:text-6xl">
-            Ge bort tid – <em className="text-clay">inte en sak till.</em>
+            Ge bort tid – <em className="not-italic text-primary">inte en sak till.</em>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-foreground/80">
             Ett presentkort hos Marita passar till födelsedagar, Mors dag, jul eller bara som ett
@@ -62,9 +62,9 @@ function GiftCards() {
               </li>
             ))}
           </ul>
-          <div className="mt-10 bg-sand p-6">
+          <div className="mt-10 rounded-3xl bg-syren p-6">
             <p className="flex items-center gap-3 font-serif text-2xl">
-              <Gift aria-hidden className="size-6 text-clay" strokeWidth={1.5} />
+              <Gift aria-hidden className="size-6 text-tegel" strokeWidth={1.5} />
               Så köper du
             </p>
             <p className="mt-3 leading-relaxed text-foreground/80">
@@ -82,7 +82,7 @@ function GiftCards() {
           </div>
         </Reveal>
         <Reveal delay={150} className="md:col-span-5 md:col-start-8">
-          <div className="aspect-[4/5] overflow-hidden">
+          <div className="arch aspect-[4/5]">
             <img
               src={bild}
               alt="Stämningsbild: en behandlare lägger handen lätt på en vilande kunds panna"

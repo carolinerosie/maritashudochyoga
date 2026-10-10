@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MessageSquareText, Package, ShoppingBag } from "lucide-react";
-import butik from "@/assets/malarns-gard-butik.jpg";
+import butik from "@/assets/ateljen-reception.jpg";
 import { absoluteUrl, contact, WEBSHOP_URL } from "@/content/site";
 import { Eyebrow, Reveal } from "@/components/site/primitives";
 import { TreatmentLink } from "@/components/site/TreatmentLink";
@@ -33,7 +33,7 @@ function HomeCare() {
         <Reveal className="md:col-span-6">
           <Eyebrow>Hemvård</Eyebrow>
           <h1 className="mt-5 text-5xl leading-[1.05] md:text-6xl">
-            Din hudvård – <em className="text-clay">hem i brevlådan.</em>
+            Din hudvård – <em className="not-italic text-primary">hem i brevlådan.</em>
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-foreground/80">
             Behandlingen är en del. Det du gör hemma varje dag är den andra. Marita hjälper dig att
@@ -43,7 +43,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <MessageSquareText
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-clay"
+                className="mt-1 size-6 shrink-0 text-tegel"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
@@ -55,7 +55,7 @@ function HomeCare() {
               </p>
             </li>
             <li className="flex gap-4">
-              <Package aria-hidden className="mt-1 size-6 shrink-0 text-clay" strokeWidth={1.5} />
+              <Package aria-hidden className="mt-1 size-6 shrink-0 text-tegel" strokeWidth={1.5} />
               <p className="leading-relaxed">
                 <strong className="font-semibold">Fri hemleverans.</strong> Produkterna skickas till
                 din brevlåda utan kostnad.
@@ -64,7 +64,7 @@ function HomeCare() {
             <li className="flex gap-4">
               <ShoppingBag
                 aria-hidden
-                className="mt-1 size-6 shrink-0 text-clay"
+                className="mt-1 size-6 shrink-0 text-tegel"
                 strokeWidth={1.5}
               />
               <p className="leading-relaxed">
@@ -92,10 +92,10 @@ function HomeCare() {
           </p>
         </Reveal>
         <Reveal delay={150} className="md:col-span-5 md:col-start-8">
-          <div className="aspect-[4/5] overflow-hidden">
+          <div className="arch aspect-[4/5]">
             <img
               src={butik}
-              alt="Butiksskylten på Målarns Gård med blommande syrener"
+              alt="Receptionen i ateljén med Maria Åkerberg-produkter och reseförpackningar"
               className="h-full w-full object-cover"
             />
           </div>

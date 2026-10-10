@@ -1,14 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck } from "lucide-react";
 import marita from "@/assets/marita-dorren.jpg";
-import ateljen from "@/assets/malarns-gard-ateljen.jpg";
+import ateljen from "@/assets/ateljen-reception.jpg";
 import { absoluteUrl, trustProof } from "@/content/site";
 import {
   BookButton,
   CareNotice,
   ConsultButton,
   Eyebrow,
-  Horizon,
   Reveal,
 } from "@/components/site/primitives";
 
@@ -35,17 +34,17 @@ export const Route = createFileRoute("/om-marita")({
 function About() {
   return (
     <>
-      <section className="pt-28 md:pt-36">
+      <section className="pt-32 md:pt-44">
         <div className="mx-auto grid max-w-[1280px] items-end gap-10 px-6 md:grid-cols-12 md:px-10">
           <Reveal className="md:col-span-6">
             <Eyebrow>Om Marita</Eyebrow>
             <h1 className="mt-5 text-5xl leading-[1.01] md:text-6xl">
-              ”Jag brukar säga att jag har <em className="text-clay">världens bästa jobb.</em>”
+              ”Jag brukar säga att jag har{" "}
+              <em className="not-italic text-primary">världens bästa jobb.</em>”
             </h1>
-            <Horizon className="mt-10 w-48 text-clay" />
           </Reveal>
           <Reveal delay={150} className="md:col-span-5 md:col-start-8">
-            <div className="aspect-square overflow-hidden">
+            <div className="arch aspect-square">
               <img
                 src={marita}
                 alt="Marita står i dörren till sin ateljé på Målarns Gård och ler"
@@ -82,7 +81,7 @@ function About() {
               <ul className="mt-4 space-y-3 border-t border-border pt-6 text-base">
                 {[...trustProof.items, "Behandlingsskadeförsäkring"].map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <BadgeCheck aria-hidden className="size-5 text-clay" strokeWidth={1.5} />
+                    <BadgeCheck aria-hidden className="size-5 text-tegel" strokeWidth={1.5} />
                     {item}
                   </li>
                 ))}
@@ -90,10 +89,10 @@ function About() {
             </Reveal>
           </div>
           <Reveal delay={200} className="md:col-span-4 md:col-start-9">
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="arch aspect-[4/5]">
               <img
                 src={ateljen}
-                alt="Ateljén på Målarns Gård med skylten Välkommen och SHR-flaggan Auktoriserad hudterapeut"
+                alt="Receptionen i ateljén med Maria Åkerberg-produkter, levande ljus och kursintyg på väggen"
                 className="h-full w-full object-cover"
               />
             </div>

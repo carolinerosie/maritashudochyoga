@@ -1,35 +1,34 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import hero from "@/assets/stamning-massage-rum.jpg";
-import ateljen from "@/assets/malarns-gard-ateljen.jpg";
+import hero from "@/assets/ateljen-behandlingsrum.jpg";
+import skylt from "@/assets/malarns-gard-skylt.jpg";
 import marita from "@/assets/marita-dorren.jpg";
 import butik from "@/assets/malarns-gard-butik.jpg";
-import hudenArt from "@/assets/stamning-mask.jpg";
-import fornyelsenArt from "@/assets/stamning-ansiktsmassage.jpg";
-import lugnetArt from "@/assets/stamning-beroring.jpg";
+import imgAnsikte from "@/assets/stamning-mask.jpg";
+import imgKurer from "@/assets/stamning-ansikte-hals.jpg";
+import imgKropp from "@/assets/stamning-massage-rum.jpg";
+import imgFransar from "@/assets/stamning-ansiktsmassage.jpg";
+import imgHalsa from "@/assets/stamning-beroring.jpg";
 import {
   BadgeCheck,
-  CalendarHeart,
+  Car,
   Clock,
-  Droplet,
-  Flower2,
-  HandHeart,
-  House,
-  MessagesSquare,
-  Quote,
-  ScanFace,
+  Gift,
+  MapPin,
+  Phone,
+  Plus,
   ShoppingBag,
-  Sparkles,
-  Wind,
-  type LucideIcon,
+  Wallet,
 } from "lucide-react";
 import {
   absoluteUrl,
-  fromPrice,
-  getTreatment,
+  byGroup,
+  contact,
+  generalFaq,
+  groupOrder,
   groups,
   localBusinessJsonLd,
+  popularTreatments,
   testimonials,
-  treatments,
   trustProof,
   type Group,
 } from "@/content/site";
@@ -37,18 +36,17 @@ import {
   BookButton,
   CareNotice,
   ConsultButton,
-  Eyebrow,
-  Horizon,
+  Kicker,
   Reveal,
-  secondaryLinkClass,
+  SectionHead,
+  textLink,
 } from "@/components/site/primitives";
 import { Guide } from "@/components/site/Guide";
-import { TreatmentLink } from "@/components/site/TreatmentLink";
-import { cn } from "@/lib/utils";
+import { TreatmentCard } from "@/components/site/Cards";
 
-const TITLE = "Maritas Hud- och Yogaateljé | Hudterapeut i Frillesås nära Kungsbacka";
+const TITLE = "Hudterapeut i Frillesås | Maritas Hud- och Yogaateljé – nära Kungsbacka";
 const DESC =
-  "Hudterapeut i Frillesås sedan 2001. Ansiktsbehandlingar, tibetansk faceliftmassage, microneedling, PRX-PLUS, massage med varma stenar och mer – på Målarns Gård, nära Åsa och Kungsbacka.";
+  "Auktoriserad hudterapeut på Målarns Gård i Frillesås sedan 2001. Ansiktsbehandlingar, hudkurer, massage med varma stenar, fransar och bryn. Nära Åsa, Fjärås och Kungsbacka.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -67,45 +65,28 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const recognitions: [LucideIcon, string][] = [
-  [Droplet, "Huden känns torr, trött och inte riktigt som din."],
-  [ShoppingBag, "Badrumsskåpet är fullt av krämer – men du vet inte vad som fungerar."],
-  [Sparkles, "Du ser fler linjer och vill ta hand om dem på ett naturligt sätt."],
-  [Flower2, "Du vill inte bli såld till. Du vill bli sedd av någon som kan hud."],
-  [Wind, "Kroppen är spänd och tankarna snurrar. Du behöver landa."],
-  [Clock, "Du tar hand om alla andra. Det är länge sedan du tog tid för dig själv."],
-];
-
-/** Bilder till områdeskorten (stämningsbilder). Byt fil i src/assets/ för att byta bild. */
-const groupArt: Record<Group, { src: string; alt: string }> = {
-  hud: { src: hudenArt, alt: "Stämningsbild: en ansiktsmask penslas på – Huden" },
-  fornyelse: {
-    src: fornyelsenArt,
-    alt: "Stämningsbild: ansiktsmassage med mjuka handgrepp – Förnyelsen",
-  },
-  lugn: { src: lugnetArt, alt: "Stämningsbild: lätt beröring av en vilande kunds panna – Lugnet" },
+/** Bild per kategori (stämningsbilder – byts mot egna bilder från ateljén när de finns). */
+const groupImage: Record<Group, string> = {
+  ansikte: imgAnsikte,
+  kurer: imgKurer,
+  kropp: imgKropp,
+  fransar: imgFransar,
+  halsa: imgHalsa,
 };
 
-const steps: [LucideIcon, string, string][] = [
+const visitSteps: [string, string][] = [
   [
-    ScanFace,
-    "Hudanalys",
-    "Vi börjar med att titta på din hud och prata om vad du vill. Det tar en kvart och kostar 200 kr – eller ingår när du bokar en behandling.",
+    "Boka",
+    "Ring eller sms:a. Är du osäker på vad du ska välja tar vi ett kort konsultationssamtal först.",
+  ],
+  ["Hudanalys", "Vi börjar med att titta på din hud och prata om vad du vill uppnå."],
+  [
+    "Behandling",
+    "Du ligger bekvämt i ateljén på Målarns Gård. Det är lugnt och varmt, och du kan alltid säga till.",
   ],
   [
-    MessagesSquare,
-    "Din plan",
-    "Du får ett ärligt förslag: en enstaka behandling, en kur eller bara bättre hemvård. Ingenting du inte behöver.",
-  ],
-  [
-    HandHeart,
-    "Behandlingen",
-    "Du ligger bekvämt i ateljén på Målarns Gård. Det är lugnt, varmt och du kan alltid säga till.",
-  ],
-  [
-    House,
     "Med dig hem",
-    "Du får en hemvård som passar din hud. Produkterna kan du beställa med ett sms – de skickas hem till dig utan kostnad.",
+    "Du får råd om hemvård som passar din hud. Produkterna kan du beställa med ett sms.",
   ],
 ];
 
@@ -114,383 +95,354 @@ function Index() {
   return (
     <>
       {/* 1. HERO */}
-      <section className="relative isolate flex min-h-[720px] items-end overflow-hidden bg-ink pt-28 text-ink-foreground md:min-h-[760px] md:items-center md:pt-24">
-        <img
-          src={hero}
-          alt="Stämningsbild: lugn nackmassage i ett varmt, ombonat behandlingsrum"
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-[55%_45%] md:object-[50%_55%]"
-        />
-        <div
-          className="absolute inset-0 -z-10 bg-ink/45 md:bg-gradient-to-r md:from-ink/70 md:via-ink/35 md:to-transparent"
-          aria-hidden
-        />
-        <div className="mx-auto w-full max-w-[1440px] px-6 pb-14 md:px-10 md:pb-0">
-          <div className="max-w-[32rem] md:max-w-[40rem]">
+      <section className="overflow-hidden pt-28 md:pt-40">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 pb-14 md:grid-cols-12 md:px-10 md:pb-20">
+          <div className="md:col-span-6">
             <Reveal>
-              <p className="eyebrow text-ink-foreground/80">Hudterapeut · Frillesås · sedan 2001</p>
+              <Kicker>Auktoriserad hudterapeut · Frillesås · sedan 2001</Kicker>
             </Reveal>
-            <Reveal delay={100}>
-              <h1 className="mt-5 max-w-[12ch] text-[3.3rem] leading-[0.96] md:text-[5rem]">
-                Din hud i trygga händer.
+            <Reveal delay={80}>
+              <h1 className="mt-5 text-[2.8rem] leading-[1.05] md:text-[4.2rem]">
+                Hudvård med omsorg, <span className="text-primary">inne på gården.</span>
               </h1>
             </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-6 max-w-[31rem] text-lg leading-relaxed text-ink-foreground/90 md:text-xl">
-                Hudvård, hudkurer och lugn för kropp och sinne – i en ateljé på Målarns Gård, några
-                minuter från havet.
+            <Reveal delay={160}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/75 md:text-xl">
+                Ansiktsbehandlingar, hudkurer och massage hos Marita på Målarns Gård i Frillesås –
+                med en hemvård som passar just din hud.
               </p>
             </Reveal>
-            <Reveal delay={300} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <BookButton variant="light">Boka tid</BookButton>
+            <Reveal delay={240} className="mt-8 flex flex-wrap gap-3">
+              <BookButton />
               <Link
-                to="/"
-                hash="hur-mar-du"
-                className="group inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-ink-foreground transition-colors duration-200 hover:text-background"
+                to="/prislista"
+                className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-6 py-3 font-medium hover:border-ink"
               >
-                <span>Hitta rätt behandling</span>
-                <span
-                  aria-hidden
-                  className="text-base transition-transform duration-200 group-hover:translate-x-1"
-                >
-                  →
-                </span>
+                Se prislistan
               </Link>
             </Reveal>
-            <Reveal delay={400} className="mt-8 border-t border-ink-foreground/30 pt-5">
-              <p className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-sm text-ink-foreground/90">
-                <strong className="font-serif text-2xl font-medium text-ink-foreground">
-                  {trustProof.headline}
-                </strong>
-                {trustProof.items.map((item) => (
-                  <span key={item} className="inline-flex items-center gap-1.5">
-                    <BadgeCheck aria-hidden className="size-4" strokeWidth={1.5} />
-                    {item}
-                  </span>
-                ))}
-              </p>
+            <Reveal delay={320} className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/75">
+              {trustProof.items.slice(0, 3).map((item) => (
+                <span key={item} className="inline-flex items-center gap-1.5">
+                  <BadgeCheck aria-hidden className="size-4 text-primary" strokeWidth={1.75} />
+                  {item}
+                </span>
+              ))}
             </Reveal>
+          </div>
+          <Reveal delay={150} className="relative md:col-span-5 md:col-start-8">
+            <div className="arch aspect-[4/5]">
+              <img
+                src={hero}
+                alt="Behandlingsrummet i Maritas ateljé: behandlingsbänk med turkosa handdukar, lampa och hudvårdsprodukter"
+                className="h-full w-full object-cover object-[45%_50%]"
+              />
+            </div>
+            <div className="absolute -bottom-5 -left-3 grid size-28 place-items-center rounded-full bg-tegel text-center text-white shadow-lg md:-left-8 md:size-32">
+              <span>
+                <span className="block text-xs tracking-[0.12em]">SEDAN</span>
+                <span className="block font-serif text-3xl md:text-4xl">2001</span>
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 2. KATEGORIER */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10">
+          <SectionHead
+            kicker="Behandlingar"
+            title="Vad vill du boka?"
+            lead="Alla behandlingar är samlade i fem områden. Välj ett område – eller sök efter ditt hudbehov längre ner."
+          />
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {groupOrder.map((g, i) => (
+              <Reveal as="li" key={g} delay={i * 70}>
+                <Link
+                  to="/behandlingar"
+                  hash={groups[g].slug}
+                  className="lift group flex h-full flex-col overflow-hidden rounded-3xl bg-white"
+                >
+                  <span className="block aspect-[4/3] overflow-hidden lg:aspect-[3/4]">
+                    <img
+                      src={groupImage[g]}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </span>
+                  <span className="flex flex-1 flex-col p-5">
+                    <span className="font-serif text-xl leading-snug">{groups[g].label}</span>
+                    <span className="mt-1 text-sm text-ink/65">{groups[g].lead}</span>
+                    <span className="mt-4 text-sm font-medium text-primary">
+                      {byGroup(g).length} {byGroup(g).length === 1 ? "behandling" : "behandlingar"}{" "}
+                      →
+                    </span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 3. POPULÄRA BEHANDLINGAR */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHead kicker="Börja här" title="Populära behandlingar" />
+            <Link to="/behandlingar" className={textLink}>
+              Alla behandlingar och priser →
+            </Link>
+          </div>
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {popularTreatments.map((t, i) => (
+              <Reveal as="li" key={t.slug} delay={(i % 3) * 80}>
+                <TreatmentCard t={t} />
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 4. HUDBEHOV */}
+      <section id="hudbehov" className="panel-stripes scroll-mt-28 py-16 md:py-24">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10">
+          <SectionHead
+            kicker="Hitta rätt behandling"
+            title="Vad vill du ha hjälp med?"
+            lead="Du behöver inte kunna namnen på behandlingarna. Välj det som stämmer bäst, så ser du vad som kan passa dig."
+          />
+          <div className="mt-10">
+            <Guide />
           </div>
         </div>
       </section>
 
-      {/* 2. IGENKÄNNING */}
+      {/* 5. OM MARITA */}
       <section className="py-16 md:py-28">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 md:gap-14 md:px-10 lg:grid-cols-12">
-          <Reveal className="max-w-xl lg:col-span-4">
-            <h2 className="text-4xl leading-tight md:text-5xl">
-              Känner du igen <em>dig?</em>
-            </h2>
-            <Horizon className="mt-10 w-40 text-clay" />
-          </Reveal>
-          <ul className="lg:col-span-7 lg:col-start-6">
-            {recognitions.map(([Icon, r], i) => (
-              <Reveal
-                as="li"
-                key={r}
-                delay={i * 90}
-                className="flex items-start gap-5 border-t border-border py-6"
-              >
-                <span
-                  aria-hidden
-                  className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-full bg-sand text-clay"
-                >
-                  <Icon className="size-[1.15rem]" strokeWidth={1.5} />
-                </span>
-                <span className="font-serif text-xl leading-snug text-foreground/85 md:text-2xl">
-                  {r}
-                </span>
-              </Reveal>
-            ))}
-            <Reveal as="li" className="border-t border-border pt-8 text-lg text-muted-foreground">
-              Då är du välkommen hit. Vi börjar med hur <em>din</em> hud mår – inte med en produkt.
-              <Link
-                to="/"
-                hash="hur-mar-du"
-                className={cn(secondaryLinkClass, "mt-5 flex w-fit text-foreground")}
-              >
-                Hitta var du kan börja →
-              </Link>
-            </Reveal>
-          </ul>
-        </div>
-      </section>
-
-      {/* 3. VÄGVISAREN */}
-      <section id="hur-mar-du" className="scroll-mt-20 bg-sand py-16 md:py-28">
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-          <Reveal className="mb-10 max-w-2xl md:mb-14">
-            <Eyebrow className="text-clay">Var vill du börja?</Eyebrow>
-            <h2 className="mt-5 text-4xl leading-tight md:text-6xl">Hur mår du just nu?</h2>
-            <p className="mt-6 text-lg text-foreground/75">
-              Du behöver inte kunna namnen på behandlingarna. Välj det som låter mest som du, så
-              föreslår jag var vi kan börja.
-            </p>
-          </Reveal>
-          <Guide />
-        </div>
-      </section>
-
-      {/* 4. TRE OMRÅDEN */}
-      <section className="py-16 md:py-32">
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <Eyebrow>Tre områden</Eyebrow>
-            <h2 className="mt-6 text-4xl leading-[1.1] md:text-6xl">
-              Hud och välmående <em className="text-clay">hänger ihop.</em>
-            </h2>
-          </Reveal>
-          <ul className="mt-10 grid gap-6 md:mt-16 md:grid-cols-3">
-            {(Object.keys(groups) as Group[]).map((g, i) => (
-              <Reveal as="li" key={g} delay={i * 150} className="group flex flex-col bg-card">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={groupArt[g].src}
-                    alt={groupArt[g].alt}
-                    loading="lazy"
-                    className="breathe-img h-full w-full object-cover"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-7 md:p-8">
-                  <p className={cn("eyebrow", groups[g].color)}>{groups[g].lead}</p>
-                  <h3 className="mt-3 text-4xl text-foreground">{groups[g].label}</h3>
-                  <p className="mt-4 leading-relaxed text-foreground/80">{groups[g].text}</p>
-                  <ul className="mt-6 divide-y divide-border border-t border-border">
-                    {treatments
-                      .filter((t) => t.group === g)
-                      .map((t) => (
-                        <li key={t.slug}>
-                          <TreatmentLink
-                            slug={t.slug}
-                            className="group/link flex items-center justify-between gap-4 py-3 font-serif text-lg italic text-foreground transition-colors duration-200 hover:text-primary"
-                          >
-                            {t.name}
-                            <span
-                              aria-hidden
-                              className="not-italic text-muted-foreground transition-transform duration-200 group-hover/link:translate-x-1"
-                            >
-                              →
-                            </span>
-                          </TreatmentLink>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 5. ALLA BEHANDLINGAR – lika stora kort, mest populära först */}
-      <section id="behandlingar" className="scroll-mt-20 border-t border-border py-16 md:py-28">
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-          <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <div className="max-w-2xl">
-              <Eyebrow>Behandlingar</Eyebrow>
-              <h2 className="mt-5 text-4xl leading-tight md:text-5xl">
-                Alla behandlingar. <em>Välj det som passar dig.</em>
-              </h2>
-            </div>
-            <p className="text-sm text-muted-foreground">Huden · Förnyelsen · Lugnet</p>
-          </Reveal>
-          <ul className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {treatments.map((t, i) => (
-              <Reveal as="li" key={t.slug} delay={(i % 3) * 80}>
-                <TreatmentLink slug={t.slug} className="group flex h-full flex-col">
-                  <span className="block aspect-[4/3] overflow-hidden">
-                    <img
-                      src={t.image}
-                      alt=""
-                      loading="lazy"
-                      className="breathe-img h-full w-full object-cover"
-                    />
-                  </span>
-                  <span className="mt-4 flex items-baseline justify-between gap-4">
-                    <span className={cn("eyebrow text-[0.7rem]", groups[t.group].color)}>
-                      {groups[t.group].label}
-                    </span>
-                    <span className="text-sm text-muted-foreground">{fromPrice(t)}</span>
-                  </span>
-                  <span className="mt-2 flex items-center justify-between gap-4">
-                    <span
-                      className="min-w-0 hyphens-auto font-serif text-2xl md:text-[1.7rem]"
-                      lang="sv"
-                    >
-                      {t.name}
-                    </span>
-                    <span
-                      aria-hidden
-                      className="text-xl text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
-                  </span>
-                  <span className="mt-2 block leading-relaxed text-foreground/70">{t.short}</span>
-                </TreatmentLink>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 6. SÅ GÅR DET TILL */}
-      <section className="bg-sand py-16 md:py-28">
-        <div className="mx-auto grid max-w-[1280px] gap-14 px-6 md:grid-cols-12 md:px-10">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 md:grid-cols-12 md:px-10">
           <Reveal className="md:col-span-5">
-            <h2 className="text-4xl leading-tight md:text-5xl">
-              Så går det till. <em>I lugn och ro.</em>
-            </h2>
-            <div className="mt-10 aspect-[4/3] overflow-hidden">
-              <img
-                src={ateljen}
-                alt="Ateljén på Målarns Gård i Frillesås med skylten Välkommen och SHR-flaggan Auktoriserad hudterapeut"
-                className="breathe-img h-full w-full object-cover object-[50%_60%]"
-              />
-            </div>
-          </Reveal>
-          <ol className="md:col-span-6 md:col-start-7 md:pt-16">
-            {steps.map(([Icon, h, p], i) => (
-              <Reveal
-                as="li"
-                key={h}
-                delay={i * 150}
-                className="grid grid-cols-[4.5rem_1fr] border-t border-foreground/15 py-7 first:border-t-0"
-              >
-                <span
-                  className="relative grid size-14 place-items-center rounded-full bg-background text-clay"
-                  aria-hidden
-                >
-                  <Icon className="size-6" strokeWidth={1.5} />
-                  <span className="absolute -right-1 -top-1 grid size-6 place-items-center rounded-full bg-clay font-sans text-xs font-semibold text-ink-foreground">
-                    {i + 1}
-                  </span>
-                </span>
-                <div>
-                  <h3 className="text-2xl">{h}</h3>
-                  <p className="mt-2 leading-relaxed text-foreground/75">{p}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* 7. MARITAS EGNA ORD */}
-      <section className="py-16 md:py-32">
-        <div className="mx-auto grid max-w-[1280px] items-center gap-12 px-6 md:grid-cols-12 md:gap-16 md:px-10">
-          <Reveal className="relative md:col-span-5">
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="arch mx-auto aspect-[4/5] max-w-md">
               <img
                 src={marita}
                 alt="Marita står i dörren till sin ateljé på Målarns Gård och ler"
                 loading="lazy"
-                className="breathe-img h-full w-full object-cover object-[45%_center]"
+                className="h-full w-full object-cover object-[45%_center]"
               />
             </div>
           </Reveal>
-          <div className="md:col-span-7">
-            <Reveal>
-              <p className="eyebrow text-clay">Marita om sitt arbete</p>
-              <Quote aria-hidden className="mt-8 size-10 text-clay" strokeWidth={1.25} />
-              <blockquote className="mt-4 font-serif text-3xl italic leading-[1.25] text-foreground md:text-[2.6rem]">
-                Jag brukar säga att jag har världens bästa jobb!
-              </blockquote>
-              <p className="mt-6 text-sm font-semibold text-foreground/70">— Marita</p>
-            </Reveal>
-            <Reveal delay={250}>
-              <p className="mt-10 max-w-lg leading-relaxed text-foreground/75">
-                Marita började som hudterapeut på Varbergs Kurort och har haft sin egen ateljé sedan
-                2001. Hon har ett stort intresse för hudens hälsa –{" "}
-                <em className="text-foreground">både inifrån och utifrån</em> – och skräddarsyr
-                behandlingar och hemvård efter just din hud. Hon vidareutbildar sig regelbundet.
-              </p>
-              <Link
-                to="/om-marita"
-                className={cn(secondaryLinkClass, "mt-8 w-fit text-foreground")}
-              >
-                Läs mer om Marita →
-              </Link>
-            </Reveal>
-          </div>
+          <Reveal delay={150} className="md:col-span-6 md:col-start-7">
+            <Kicker>Möt Marita</Kicker>
+            <blockquote className="mt-5 font-serif text-[2.1rem] leading-snug text-primary md:text-5xl">
+              ”Jag brukar säga att jag har världens bästa jobb!”
+            </blockquote>
+            <p className="mt-6 text-lg leading-relaxed text-ink/75">
+              Marita började som hudterapeut på Varbergs Kurort och har haft sin egen ateljé sedan
+              2001. Hon har ett stort intresse för hudens hälsa – både inifrån och utifrån – och
+              skräddarsyr behandlingar och hemvård efter just din hud.
+            </p>
+            <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+              {trustProof.items.map((item) => (
+                <li key={item} className="flex items-center gap-2 text-ink/80">
+                  <BadgeCheck aria-hidden className="size-5 text-primary" strokeWidth={1.75} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Link to="/om-marita" className={`${textLink} mt-6`}>
+              Läs mer om Marita →
+            </Link>
+          </Reveal>
         </div>
       </section>
 
-      {/* 8. KUNDRÖST / BEVIS – ankarfärg */}
-      <section
-        aria-label={review ? "Kundomdöme" : "Trygghet"}
-        className="bg-primary py-20 text-primary-foreground md:py-28"
-      >
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+      {/* 6. ETT BESÖK */}
+      <section className="bg-syren py-16 md:py-24">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10">
+          <SectionHead kicker="Ditt besök" title="Så går ett besök till" center />
+          <ol className="mt-10 grid gap-5 md:grid-cols-4">
+            {visitSteps.map(([h, p], i) => (
+              <Reveal as="li" key={h} delay={i * 90} className="rounded-3xl bg-white p-6">
+                <span className="grid size-10 place-items-center rounded-full bg-primary font-serif text-lg text-primary-foreground">
+                  {i + 1}
+                </span>
+                <h3 className="mt-4 text-2xl">{h}</h3>
+                <p className="mt-2 leading-relaxed text-ink/75">{p}</p>
+              </Reveal>
+            ))}
+          </ol>
           {review ? (
-            <Reveal className="mx-auto max-w-4xl text-center">
-              <p className="eyebrow text-primary-foreground/70">Från en kund</p>
-              <blockquote className="mt-8 font-serif text-3xl italic leading-[1.3] md:text-5xl">
-                ”{review.quote}”
-              </blockquote>
-              <p className="mt-8 text-sm text-primary-foreground/80">
-                — {review.name}, {review.treatment.toLowerCase()}
-              </p>
+            <Reveal className="mx-auto mt-12 max-w-3xl text-center">
+              <blockquote className="font-serif text-3xl leading-snug">”{review.quote}”</blockquote>
+              <p className="mt-4 text-sm text-ink/70">— {review.name}</p>
             </Reveal>
-          ) : (
-            <Reveal className="mx-auto max-w-4xl text-center">
-              <p className="eyebrow text-primary-foreground/70">Tryggt och kunnigt</p>
-              <h2 className="mt-8 font-serif text-3xl italic leading-[1.3] md:text-5xl">
-                Samma hudterapeut sedan 2001 – med utbildning, försäkring och omsorg.
-              </h2>
-              <ul className="mx-auto mt-10 flex max-w-2xl flex-wrap justify-center gap-x-8 gap-y-3 border-t border-primary-foreground/25 pt-8 text-sm text-primary-foreground/90">
-                {[...trustProof.items, "Behandlingsskadeförsäkring"].map((item) => (
-                  <li key={item} className="inline-flex items-center gap-2">
-                    <BadgeCheck aria-hidden className="size-4" strokeWidth={1.5} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          )}
+          ) : null}
         </div>
       </section>
 
-      {/* 9. BOKA */}
-      <section id="boka-nu" className="py-16 md:py-32">
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-          <div className="grid gap-12 md:grid-cols-12">
-            <Reveal className="md:col-span-6">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={butik}
-                  alt="Butiksskylten på Målarns Gård med blommande syrener"
-                  loading="lazy"
-                  className="breathe-img h-full w-full object-cover"
-                />
-              </div>
-            </Reveal>
-            <Reveal
-              delay={200}
-              className="flex flex-col justify-center md:col-span-5 md:col-start-8"
-            >
-              <Eyebrow>Målarns Gård · Frillesås</Eyebrow>
-              <h2 className="mt-5 text-4xl leading-tight md:text-5xl">
-                Ta tid för dig. <em>Resten ordnar vi.</em>
-              </h2>
-              <p className="mt-6 leading-relaxed text-foreground/75">
-                Boka din tid – eller ring Marita för ett konsultationssamtal om du är osäker på vad
-                som passar dig. Gratis parkering finns intill ateljén.
+      {/* 7. HEMVÅRD + PRESENTKORT */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto grid max-w-[1240px] gap-6 px-6 md:grid-cols-2 md:px-10">
+          <Reveal className="overflow-hidden rounded-3xl bg-white">
+            <img
+              src={butik}
+              alt="Butiksskylten på Målarns Gård med blommande syrener"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover"
+            />
+            <div className="p-7 md:p-9">
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-tegel">
+                <ShoppingBag aria-hidden className="size-4" strokeWidth={1.75} /> Hemvård
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-6">
-                <BookButton />
-                <ConsultButton />
+              <h2 className="mt-2 text-3xl">Din hudvård – hem i brevlådan</h2>
+              <p className="mt-3 leading-relaxed text-ink/75">
+                Maria Åkerberg, Esse och Neostrata. Beställ med ett sms så skickas produkterna hem
+                utan kostnad.
+              </p>
+              <Link to="/hemvard" className={`${textLink} mt-4`}>
+                Så beställer du →
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal
+            delay={120}
+            className="flex flex-col justify-between overflow-hidden rounded-3xl bg-primary p-7 text-primary-foreground md:p-9"
+          >
+            <div>
+              <p className="inline-flex items-center gap-2 text-sm font-medium text-white/80">
+                <Gift aria-hidden className="size-4" strokeWidth={1.75} /> Presentkort
+              </p>
+              <h2 className="mt-2 text-3xl md:text-4xl">Ge bort en stund som bara är hennes</h2>
+              <p className="mt-3 max-w-md leading-relaxed text-white/85">
+                Till födelsedagen, Mors dag eller jul. Välj en behandling eller ett belopp – betala
+                med Swish.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to="/presentkort"
+                className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-medium text-ink hover:bg-syren"
+              >
+                Köp presentkort
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 8. FRÅGOR + PRAKTISKT */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="mx-auto grid max-w-[1240px] gap-10 px-6 md:grid-cols-12 md:px-10">
+          <div className="md:col-span-7">
+            <SectionHead kicker="Vanliga frågor" title="Bra att veta innan du kommer" />
+            <div className="mt-8 space-y-3">
+              {generalFaq.map((item) => (
+                <details
+                  key={item.question}
+                  className="group rounded-2xl bg-kritvit px-6 py-1 open:pb-5"
+                >
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 font-serif text-xl [&::-webkit-details-marker]:hidden">
+                    {item.question}
+                    <Plus
+                      aria-hidden
+                      className="size-5 shrink-0 text-primary transition-transform group-open:rotate-45"
+                    />
+                  </summary>
+                  <p className="leading-relaxed text-ink/75">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+          <Reveal delay={120} className="md:col-span-4 md:col-start-9">
+            <div className="rounded-3xl bg-panel p-7">
+              <h2 className="text-2xl">Praktisk information</h2>
+              <ul className="mt-5 space-y-4 text-[0.95rem]">
+                <li className="flex gap-3">
+                  <MapPin
+                    aria-hidden
+                    className="mt-0.5 size-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                  />
+                  <span>
+                    {contact.venue}, {contact.street}, {contact.locality}
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <Phone
+                    aria-hidden
+                    className="mt-0.5 size-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                  />
+                  <span>
+                    <a href={contact.phoneHref} className="underline underline-offset-4">
+                      {contact.phone}
+                    </a>{" "}
+                    (även sms) ·{" "}
+                    <a href={contact.landlineHref} className="underline underline-offset-4">
+                      {contact.landline}
+                    </a>
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <Car
+                    aria-hidden
+                    className="mt-0.5 size-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                  />
+                  Gratis parkering intill ateljén
+                </li>
+                <li className="flex gap-3">
+                  <Wallet
+                    aria-hidden
+                    className="mt-0.5 size-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                  />
+                  {contact.payment}
+                </li>
+                <li className="flex gap-3">
+                  <Clock
+                    aria-hidden
+                    className="mt-0.5 size-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                  />
+                  {contact.openingHours || "Ring eller sms:a för lediga tider"}
+                </li>
+              </ul>
+              <Link to="/kontakt" className={`${textLink} mt-5`}>
+                Karta och vägbeskrivning →
+              </Link>
+            </div>
+            <CareNotice className="mt-5" />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 9. AVSLUTANDE BOKNING */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10">
+          <div className="grid overflow-hidden rounded-[2rem] bg-ink text-ink-foreground md:grid-cols-2">
+            <div className="flex flex-col justify-center p-8 md:p-14">
+              <Kicker className="text-[#f0b8a8]">Välkommen in</Kicker>
+              <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
+                Ta en stund för dig själv.
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-ink-foreground/80">
+                Boka din tid – eller ring Marita om du vill prata först. Ateljén ligger inne på
+                Målarns Gård, med gratis parkering intill.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <BookButton variant="light" />
+                <ConsultButton variant="light" />
               </div>
-              <div className="mt-6 flex flex-wrap gap-6">
-                <Link to="/presentkort" className={secondaryLinkClass}>
-                  <CalendarHeart aria-hidden className="mr-2 size-4" strokeWidth={1.5} />
-                  Presentkort
-                </Link>
-                <Link to="/kontakt" className={secondaryLinkClass}>
-                  Hitta hit
-                </Link>
-              </div>
-              <CareNotice className="mt-12" />
-            </Reveal>
+            </div>
+            <img
+              src={skylt}
+              alt="Emaljskylten Målarns Gård, Anno 1908, med murgröna på den vita panelväggen"
+              loading="lazy"
+              className="h-72 w-full object-cover md:h-full"
+            />
           </div>
         </div>
       </section>

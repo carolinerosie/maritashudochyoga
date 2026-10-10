@@ -14,6 +14,8 @@ import { Route as HemvardRouteImport } from './routes/hemvard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as OmMaritaRouteImport } from './routes/om-marita'
 import { Route as PresentkortRouteImport } from './routes/presentkort'
+import { Route as PrislistaRouteImport } from './routes/prislista'
+import { Route as BehandlingarIndexRouteImport } from './routes/behandlingar.index'
 import { Route as BehandlingarSlugRouteImport } from './routes/behandlingar.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +43,16 @@ const PresentkortRoute = PresentkortRouteImport.update({
   path: '/presentkort',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrislistaRoute = PrislistaRouteImport.update({
+  id: '/prislista',
+  path: '/prislista',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BehandlingarIndexRoute = BehandlingarIndexRouteImport.update({
+  id: '/behandlingar/',
+  path: '/behandlingar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BehandlingarSlugRoute = BehandlingarSlugRouteImport.update({
   id: '/behandlingar/$slug',
   path: '/behandlingar/$slug',
@@ -53,7 +65,9 @@ export interface FileRoutesByFullPath {
   '/kontakt': typeof KontaktRoute
   '/om-marita': typeof OmMaritaRoute
   '/presentkort': typeof PresentkortRoute
+  '/prislista': typeof PrislistaRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
+  '/behandlingar/': typeof BehandlingarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +75,9 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/om-marita': typeof OmMaritaRoute
   '/presentkort': typeof PresentkortRoute
+  '/prislista': typeof PrislistaRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
+  '/behandlingar': typeof BehandlingarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +86,9 @@ export interface FileRoutesById {
   '/kontakt': typeof KontaktRoute
   '/om-marita': typeof OmMaritaRoute
   '/presentkort': typeof PresentkortRoute
+  '/prislista': typeof PrislistaRoute
   '/behandlingar/$slug': typeof BehandlingarSlugRoute
+  '/behandlingar/': typeof BehandlingarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,7 +98,9 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-marita'
     | '/presentkort'
+    | '/prislista'
     | '/behandlingar/$slug'
+    | '/behandlingar/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -88,7 +108,9 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-marita'
     | '/presentkort'
+    | '/prislista'
     | '/behandlingar/$slug'
+    | '/behandlingar'
   id:
     | '__root__'
     | '/'
@@ -96,7 +118,9 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-marita'
     | '/presentkort'
+    | '/prislista'
     | '/behandlingar/$slug'
+    | '/behandlingar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,7 +129,9 @@ export interface RootRouteChildren {
   KontaktRoute: typeof KontaktRoute
   OmMaritaRoute: typeof OmMaritaRoute
   PresentkortRoute: typeof PresentkortRoute
+  PrislistaRoute: typeof PrislistaRoute
   BehandlingarSlugRoute: typeof BehandlingarSlugRoute
+  BehandlingarIndexRoute: typeof BehandlingarIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,6 +171,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentkortRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prislista': {
+      id: '/prislista'
+      path: '/prislista'
+      fullPath: '/prislista'
+      preLoaderRoute: typeof PrislistaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/behandlingar/': {
+      id: '/behandlingar/'
+      path: '/behandlingar'
+      fullPath: '/behandlingar/'
+      preLoaderRoute: typeof BehandlingarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/behandlingar/$slug': {
       id: '/behandlingar/$slug'
       path: '/behandlingar/$slug'
@@ -161,7 +201,9 @@ const rootRouteChildren: RootRouteChildren = {
   KontaktRoute: KontaktRoute,
   OmMaritaRoute: OmMaritaRoute,
   PresentkortRoute: PresentkortRoute,
+  PrislistaRoute: PrislistaRoute,
   BehandlingarSlugRoute: BehandlingarSlugRoute,
+  BehandlingarIndexRoute: BehandlingarIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

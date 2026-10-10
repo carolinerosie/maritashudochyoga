@@ -9,43 +9,51 @@ import {
   POPULARITY_ORDER,
   getTreatment,
   groups,
-  guideOptions,
+  concerns,
+  generalFaq,
+  groupOrder,
+  popularTreatments,
   publicPaths,
   SITE_URL,
   treatments,
 } from "./site";
 
-const rec = (id: string) => guideOptions.find((o) => o.id === id)?.treatments;
+const rec = (id: string) => concerns.find((o) => o.id === id)?.treatments;
 
-describe("Hur mår du just nu? – vägvisaren", () => {
-  it("har 5–8 påståenden", () => {
-    expect(guideOptions.length).toBeGreaterThanOrEqual(5);
-    expect(guideOptions.length).toBeLessThanOrEqual(8);
+describe("Hitta efter hudbehov", () => {
+  it("har sex hudbehov", () => {
+    expect(concerns.map((c) => c.label)).toEqual([
+      "Akne & orenheter",
+      "Rodnad & känslig hud",
+      "Pigment & solskador",
+      "Linjer & fasthet",
+      "Torr & trött hud",
+      "Stress & spänningar",
+    ]);
   });
-  it("linjer leder till tibetansk faceliftmassage eller microneedling", () => {
-    expect(rec("linjer")).toEqual(["tibetansk-faceliftmassage", "microneedling"]);
+  it("akne leder till acnebehandling först", () => {
+    expect(rec("akne")?.[0]).toBe("acnebehandling");
   });
-  it("pigment leder till PRX-PLUS eller microneedling", () => {
-    expect(rec("pigment")).toEqual(["prx-plus", "microneedling"]);
-  });
-  it("oren hud leder till acnebehandling eller AHA-PHA-kur", () => {
-    expect(rec("oren")).toEqual(["acnebehandling", "aha-pha-kur"]);
-  });
-  it("spänd leder till varma stenar eller beröring", () => {
-    expect(rec("spand")).toEqual(["massage-varma-stenar", "beroring-reiki-healing"]);
-  });
-  it("vanor leder till livsstilscoach", () => {
-    expect(rec("vanor")).toEqual(["livsstilscoach"]);
-  });
-  it("alla rekommendationer pekar på en befintlig behandling", () => {
-    for (const o of guideOptions)
-      for (const s of o.treatments) expect(getTreatment(s)).toBeDefined();
+  it("alla förslag pekar på en befintlig behandling", () => {
+    for (const c of concerns) for (const s of c.treatments) expect(getTreatment(s)).toBeDefined();
   });
 });
 
 describe("Behandlingar och områden", () => {
-  it("tre områden: Huden, Förnyelsen, Lugnet", () => {
-    expect(Object.values(groups).map((g) => g.label)).toEqual(["Huden", "Förnyelsen", "Lugnet"]);
+  it("fem behandlingskategorier i rätt ordning", () => {
+    expect(groupOrder.map((g) => groups[g].label)).toEqual([
+      "Ansiktsbehandlingar",
+      "Hudkurer & resultat",
+      "Massage & kropp",
+      "Fransar, bryn & epilering",
+      "Hälsa & livsstil",
+    ]);
+  });
+  it("sex populära behandlingar i popularitetsordning", () => {
+    expect(popularTreatments.map((t) => t.slug)).toEqual(POPULARITY_ORDER.slice(0, 6));
+  });
+  it("vanliga frågor finns", () => {
+    expect(generalFaq.length).toBeGreaterThanOrEqual(5);
   });
   it("varje område har minst en behandling", () => {
     for (const g of Object.keys(groups)) expect(treatments.some((t) => t.group === g)).toBe(true);
