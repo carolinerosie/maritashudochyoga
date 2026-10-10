@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { BOOKING_URL, treatments } from "@/content/site";
+import { BOOKING_URL, contact, treatments } from "@/content/site";
 import { BookButton } from "./primitives";
 import { TreatmentLink } from "./TreatmentLink";
+import { InstagramFeed, SocialLinks } from "./Social";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -160,7 +161,7 @@ export function Footer() {
         <div className="md:col-span-5">
           <Logo />
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Kroppsterapi och coaching i Mölndal, nära Göteborg. För dig som vill släppa stress, värk
+            Kroppsterapi och coaching i Göteborg. För dig som vill släppa stress, värk
             och spänningar – och skapa en hälsa som håller.
           </p>
         </div>
@@ -178,13 +179,20 @@ export function Footer() {
         </div>
         <div className="md:col-span-4">
           <p className="eyebrow mb-4 text-muted-foreground">Besök</p>
-          <p className="text-sm leading-relaxed">Mölndal, nära Göteborg</p>
+          <address className="text-sm not-italic leading-relaxed">
+            {contact.venue}
+            <br />
+            {contact.street}, {contact.postalCode} {contact.locality}
+          </address>
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block border-b border-foreground/40 pb-1 text-sm hover:border-foreground">
             Boka via Bokadirekt →
           </a>
+          <p className="eyebrow mb-3 mt-10 text-muted-foreground">Följ Anna</p>
+          <SocialLinks size="sm" />
         </div>
+        <InstagramFeed />
         <p className="text-xs text-muted-foreground md:col-span-12">
-          © Skapa din hälsa · Friskvård och komplementär behandling – inte en ersättning för vård.
+          © {new Date().getFullYear()} Anna Flatöe – Skapa din hälsa
         </p>
       </div>
     </footer>

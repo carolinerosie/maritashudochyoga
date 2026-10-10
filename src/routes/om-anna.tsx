@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import anna from "@/assets/anna-portratt.webp.asset.json";
-import postural from "@/assets/postural.jpg.asset.json";
+import anna from "@/assets/anna-portratt.webp";
+import postural from "@/assets/postural.jpg";
+import { absoluteUrl } from "@/content/site";
 import { BookButton, CareNotice, Eyebrow, Reveal } from "@/components/site/primitives";
 
 const TITLE = "Om Anna Flatöe – från egen smärta till Skapa din hälsa";
@@ -13,11 +14,11 @@ export const Route = createFileRoute("/om-anna")({
       { name: "description", content: DESC },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
-      { property: "og:url", content: "/om-anna" },
+      { property: "og:url", content: absoluteUrl("/om-anna") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/om-anna" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/om-anna") }],
   }),
   component: About,
 });
@@ -29,7 +30,7 @@ function About() {
          <div className="mx-auto max-w-[1280px] px-6 md:px-10">
           <Reveal className="relative">
             <div className="aspect-[4/5] overflow-hidden md:ml-auto md:aspect-[16/8] md:w-[82%]">
-              <img src={anna.url} alt="Porträtt av Anna Flatöe" className="h-full w-full object-cover" />
+              <img src={anna} alt="Porträtt av Anna Flatöe" className="h-full w-full object-cover" />
             </div>
             <div className="mt-8 md:absolute md:bottom-0 md:left-0 md:w-[47%] md:bg-background md:pb-8 md:pr-10 md:pt-10">
               <Eyebrow>Om Anna</Eyebrow>
@@ -41,8 +42,8 @@ function About() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-         <div className="mx-auto grid max-w-[1280px] gap-16 px-6 md:grid-cols-12 md:px-10">
+      <section className="pb-16 pt-10 md:py-28">
+         <div className="mx-auto grid max-w-[1280px] gap-12 px-6 md:grid-cols-12 md:gap-16 md:px-10">
           <div className="space-y-6 text-lg leading-relaxed text-foreground/85 md:col-span-6 md:col-start-2">
             <Reveal>
               <p className="font-serif text-3xl leading-snug text-foreground">
@@ -72,19 +73,19 @@ function About() {
           </div>
           <Reveal delay={200} className="md:col-span-4 md:col-start-9">
             <div className="aspect-[4/5] overflow-hidden">
-              <img src={postural.url} alt="Anna guidar en klient i en rörelse" className="h-full w-full object-cover" />
+              <img src={postural} alt="Anna guidar en klient i en rörelse" className="h-full w-full object-cover" />
             </div>
           </Reveal>
         </div>
       </section>
 
-       <section className="border-t border-border py-20 md:py-28">
+       <section className="border-t border-border py-16 md:py-28">
          <div className="mx-auto max-w-[1280px] px-6 md:px-10">
            <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
              <h2 className="max-w-xl text-4xl md:text-5xl">Vill du att vi börjar tillsammans?</h2>
              <BookButton />
            </div>
-           <CareNotice className="mt-14 max-w-xl" />
+           <CareNotice className="mt-10 max-w-xl md:mt-14" />
          </div>
       </section>
     </>

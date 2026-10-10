@@ -1,0 +1,8 @@
+# Netlify-publicering. Påverkar inte Lovable (Lovable bygger mot Cloudflare som tidigare).
+[build]
+  command = "bun install --frozen-lockfile && bun run build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"
+  NODE_VERSION = "22"

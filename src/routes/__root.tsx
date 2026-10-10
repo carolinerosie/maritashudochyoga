@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Footer, Header, MobileBookBar } from "@/components/site/Chrome";
 import { Button } from "@/components/ui/button";
+import { SHARE_IMAGE } from "@/content/site";
 
 function NotFoundComponent() {
   return (
@@ -69,10 +70,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Anna Flatöe – Skapa din hälsa" },
-      { name: "description", content: "Kroppsterapi och coaching i Mölndal, nära Göteborg." },
+      { name: "description", content: "Kroppsterapi och coaching i Göteborg – mottagning i Mölndal." },
       { name: "author", content: "Anna Flatöe" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Anna Flatöe – Skapa din hälsa" },
+      { property: "og:locale", content: "sv_SE" },
+      { property: "og:image", content: SHARE_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Anna Flatöe i sin mottagning i Mölndal" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: SHARE_IMAGE },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -105,8 +113,29 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Nya besök och omladdningar börjar alltid högst upp på sidan.
+ * Bakåt/framåt i webbläsaren behåller däremot läget där man var, och länkar med #ankare fungerar som vanligt.
+ */
+function useStartAtTop() {
+  useEffect(() => {
+    if (typeof window === "undefined" || window.location.hash) return;
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    if (nav?.type === "back_forward") return;
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+    toTop();
+    const raf = requestAnimationFrame(() => requestAnimationFrame(toTop));
+    const timer = window.setTimeout(toTop, 150);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
+  }, []);
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useStartAtTop();
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -15,3 +15,9 @@
 - Public treatment navigation only exposes entries with confirmed content; placeholder entries remain editorial drafts until approved.
 - Use the shared TreatmentLink for public treatment navigation because lymfmassage has a dedicated canonical route.
 - The header treatment dropdown uses the shared Button and local React disclosure state rather than Radix NavigationMenu to avoid the preview's dependency-level hook dispatcher crash.
+
+## Arbetsflöde (Netlify)
+- `netlify-flytt` är Netlifys produktionsgren: varje push dit publiceras live och kostar Netlify-krediter. Pusha aldrig dit utan Carolines uttryckliga godkännande.
+- Allt arbete sker på grenen `forslag`. En öppen pull request `forslag` → `netlify-flytt` ger en gratis förhandsgranskning (Deploy Preview, 0 krediter, kräver Netlify Pro) som uppdateras vid varje push. Skicka länken till Caroline efter varje ändring.
+- Publicering = merge av pull requesten, en gång när allt är godkänt.
+- Domän och kontaktuppgifter ligger i src/content/site.ts (SITE_URL, contact). public/sitemap.xml och public/robots.txt ska följa SITE_URL (testerna kontrollerar).

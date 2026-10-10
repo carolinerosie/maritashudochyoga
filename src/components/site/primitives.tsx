@@ -26,7 +26,7 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -87,6 +87,15 @@ export function BookButton({
         <span aria-hidden>→</span>
       </a>
     </Button>
+  );
+}
+
+/** Sekundär knapp: det kostnadsfria 30-minuterssamtalet (bokas på Bokadirekt). För den som inte vet var hen ska börja. */
+export function ConsultButton({ className }: { className?: string }) {
+  return (
+    <BookButton variant="line" className={cn("max-w-full whitespace-normal text-left", className)}>
+      Boka kostnadsfritt samtal · 30 min
+    </BookButton>
   );
 }
 

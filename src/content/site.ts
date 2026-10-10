@@ -1,11 +1,72 @@
-import kakled from "@/assets/kakled.jpg.asset.json";
-import kinesiologi from "@/assets/kinesiologi.jpg.asset.json";
-import healing from "@/assets/healing.jpg.asset.json";
-import healingHeader from "@/assets/healing-header.jpg.asset.json";
-import postural from "@/assets/postural.jpg.asset.json";
-import boka from "@/assets/boka.jpg.asset.json";
+import kakled from "@/assets/kakled.jpg";
+import kinesiologi from "@/assets/kinesiologi.jpg";
+import lymfmassage from "@/assets/lymfmassage-rygg.jpg";
+import healingHeader from "@/assets/healing-header.jpg";
+import postural from "@/assets/postural.jpg";
+import boka from "@/assets/boka.jpg";
 
 export const BOOKING_URL = "https://www.bokadirekt.se/places/anna-flatoe-skapa-din-halsa-42319";
+
+/** Sajtens publika adress. Byts här om domänen ändras – canonical, delningslänkar och sitemap följer med. */
+export const SITE_URL = "https://www.skapadinhalsa.com";
+export const absoluteUrl = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
+
+/** Delningsbild (1200 × 630) för Facebook, LinkedIn m.fl. Ligger i public/. */
+export const SHARE_IMAGE = absoluteUrl("/og-image.jpg");
+
+/** Publicerade kontaktuppgifter (annaflatoe.se och Bokadirekt). */
+export const contact = {
+  businessName: "Anna Flatöe – Skapa din hälsa",
+  phone: "076-843 96 41",
+  phoneHref: "tel:+46768439641",
+  email: "info@annaflatoe.se",
+  locality: "Mölndal",
+  venue: "Dalens Hälsoklinik",
+  street: "Toltorpsgatan 50A",
+  postalCode: "431 69",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Dalens+H%C3%A4lsoklinik&query_place_id=ChIJ67sD1zfzT0YRflBXVxIaFQo",
+  geo: { latitude: 57.6730536, longitude: 11.9789767 },
+  mapsEmbedUrl:
+    "https://maps.google.com/maps?q=57.6730536,11.9789767&z=16&t=m&hl=sv&output=embed",
+};
+
+/** Sociala medier. Lämna en adress tom ("") så visas inte ikonen. */
+export const social = {
+  instagram: "https://www.instagram.com/skapadinhalsa",
+  instagramHandle: "@skapadinhalsa",
+  tiktok: "https://www.tiktok.com/@skapadinhalsa",
+  facebook: "",
+};
+
+/**
+ * De fyra senaste Instagram-inläggen hämtas från ett Behold-flöde (behold.so, gratisplan).
+ * Klistra in flödets adress, t.ex. "https://feeds.behold.so/abc123". Tom = visa Annas egna bilder med länk till Instagram.
+ */
+export const INSTAGRAM_FEED_URL = "https://feeds.behold.so/aIk793DPS2W670w15yrn";
+
+/** Strukturerad data för verksamheten (Google). */
+export const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "@id": `${SITE_URL}/#verksamhet`,
+  name: contact.businessName,
+  url: absoluteUrl("/"),
+  image: SHARE_IMAGE,
+  telephone: "+46768439641",
+  email: contact.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: contact.street,
+    postalCode: contact.postalCode,
+    addressLocality: contact.locality,
+    addressCountry: "SE",
+  },
+  geo: { "@type": "GeoCoordinates", ...contact.geo },
+  hasMap: contact.mapsUrl,
+  areaServed: ["Mölndal", "Göteborg"],
+  founder: { "@type": "Person", name: "Anna Flatöe" },
+  sameAs: [BOOKING_URL, "https://www.instagram.com/skapadinhalsa", "https://www.tiktok.com/@skapadinhalsa"],
+};
 
 export const trustProof = {
   rating: "4,9 av 5",
@@ -63,7 +124,7 @@ export const treatments: Treatment[] = [
     name: "Käkledsbehandling",
     group: "kropp",
     short: "För dig som biter ihop, gnisslar tänder eller har huvudvärk som sitter i.",
-    image: kakled.url,
+    image: kakled,
     imageAlt: "Anna behandlar en klients käke och nacke i lugnt ljus",
     forWho: [
       "Gnisslar tänder eller biter ihop på natten",
@@ -100,7 +161,7 @@ export const treatments: Treatment[] = [
     name: "Kinesiologi",
     group: "bro",
     short: "När du inte vet var du ska börja. Kroppen visar vad den behöver först.",
-    image: kinesiologi.url,
+    image: kinesiologi,
     imageAlt: "Anna gör muskeltestning med en klient på behandlingsbänken",
     forWho: [
       "Har haft besvär länge utan att hitta orsaken",
@@ -136,8 +197,8 @@ export const treatments: Treatment[] = [
     name: "Lymfmassage",
     group: "kropp",
     short: "När kroppen känns tung, svullen och trött.",
-    image: healing.url,
-    imageAlt: "Anna lägger en lugn hand på klientens mage och panna",
+    image: lymfmassage,
+    imageAlt: "Anna ger lymfmassage med lugna, mjuka handgrepp över ryggen",
     forWho: [
       "Känner dig tung eller svullen",
       "Är stel och trött i kroppen",
@@ -171,7 +232,7 @@ export const treatments: Treatment[] = [
     name: "Postural terapi",
     group: "kropp",
     short: "För återkommande värk, gamla skador och en hållning som kompenserar.",
-    image: postural.url,
+    image: postural,
     imageAlt: "Anna guidar en klients arm och axel i en rörelse",
     forWho: [
       "Har återkommande värk",
@@ -200,7 +261,7 @@ export const treatments: Treatment[] = [
     name: "Theta Healing",
     group: "sinne",
     short: "För mönster, rädslor, sorg och relationer som sitter djupt.",
-    image: healingHeader.url,
+    image: healingHeader,
     imageAlt: "Anna håller en hand vid en avslappnad klients huvud",
     forWho: [
       "Har fastnat i negativa mönster",
@@ -230,7 +291,7 @@ export const treatments: Treatment[] = [
     name: "Coaching",
     group: "sinne",
     short: "När du vill ta tillbaka din egen kraft och riktning.",
-    image: boka.url,
+    image: boka,
     imageAlt: "Anna och en klient samtalar vid ett bord",
     forWho: ["Vill skapa förändring i vardagen", "Vill hitta tillbaka till din egen kraft"],
     what: "Coaching ger dig tid att sortera det som skaver, formulera vad du vill förändra och hitta steg som fungerar i din vardag. Samtalen utgår från din situation och den riktning du vill ta.",
@@ -356,3 +417,11 @@ export const servicePages: Record<"lymfmassage", ServicePageContent> = {
     ],
   },
 };
+
+/** Alla publika sidor. public/sitemap.xml ska innehålla exakt dessa (kontrolleras av testerna). */
+export const publicPaths = [
+  "/",
+  "/om-anna",
+  "/kontakt",
+  ...treatments.map((t) => (t.slug === "lymfmassage" ? "/lymfmassage" : `/behandlingar/${t.slug}`)),
+];

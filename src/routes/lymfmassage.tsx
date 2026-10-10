@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getTreatment, servicePages } from "@/content/site";
-import { ServicePage } from "@/components/site/ServicePage";
+import { absoluteUrl, getTreatment, localBusinessJsonLd, servicePages } from "@/content/site";
+import { TreatmentArticle } from "@/components/site/TreatmentArticle";
 
 const c = servicePages.lymfmassage;
 
@@ -11,11 +11,11 @@ export const Route = createFileRoute("/lymfmassage")({
       { name: "description", content: c.metaDescription },
       { property: "og:title", content: c.seoTitle },
       { property: "og:description", content: c.metaDescription },
-      { property: "og:url", content: "/lymfmassage" },
+      { property: "og:url", content: absoluteUrl("/lymfmassage") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/lymfmassage" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/lymfmassage") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -25,8 +25,8 @@ export const Route = createFileRoute("/lymfmassage")({
           name: "Lymfmassage",
           description: c.metaDescription,
           areaServed: ["Göteborg", "Mölndal"],
-          provider: { "@type": "LocalBusiness", name: "Anna Flatöe – Skapa din hälsa", address: { "@type": "PostalAddress", addressLocality: "Mölndal", addressCountry: "SE" } },
-          url: "/lymfmassage",
+          provider: { "@id": localBusinessJsonLd["@id"], "@type": localBusinessJsonLd["@type"], name: localBusinessJsonLd.name },
+          url: absoluteUrl("/lymfmassage"),
         }),
       },
     ],
@@ -37,5 +37,5 @@ export const Route = createFileRoute("/lymfmassage")({
 function LymfmassagePage() {
   const t = getTreatment("lymfmassage");
   if (!t) return null;
-  return <ServicePage treatment={t} content={c} />;
+  return <TreatmentArticle treatment={t} extraSections={c.sections} />;
 }

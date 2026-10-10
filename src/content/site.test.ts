@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { BOOKING_URL, getTreatment, guideOptions, treatments } from "./site";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { absoluteUrl, BOOKING_URL, getTreatment, guideOptions, publicPaths, SITE_URL, treatments } from "./site";
 
 const rec = (id: string) => guideOptions.find((o) => o.id === id)?.treatments;
 
@@ -53,5 +55,25 @@ describe("Var sitter det? – vägvisaren", () => {
     expect(treatment?.seoTitle).toBe("Lymfmassage Göteborg & Mölndal | Anna Flatöe – Skapa din hälsa");
     expect(treatment?.heading).toBe("Lymfmassage i Göteborg & Mölndal");
     expect(treatment?.questions).toHaveLength(5);
+  });
+});
+
+describe("SEO-grund", () => {
+  const sitemap = readFileSync(resolve(__dirname, "../../public/sitemap.xml"), "utf8");
+  const locs = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+
+  it("sitemap innehåller exakt alla publika sidor", () => {
+    expect(locs.sort()).toEqual(publicPaths.map(absoluteUrl).sort());
+  });
+  it("robots.txt pekar på sitemap", () => {
+    const robots = readFileSync(resolve(__dirname, "../../public/robots.txt"), "utf8");
+    expect(robots).toContain(`Sitemap: ${SITE_URL}/sitemap.xml`);
+  });
+  it("canonical-adresser är fullständiga", () => {
+    expect(absoluteUrl("/")).toBe(SITE_URL);
+    expect(absoluteUrl("/kontakt")).toBe(`${SITE_URL}/kontakt`);
+  });
+  it("delningsbilden finns", () => {
+    expect(existsSync(resolve(__dirname, "../../public/og-image.jpg"))).toBe(true);
   });
 });
